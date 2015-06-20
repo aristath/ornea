@@ -1,0 +1,154 @@
+.main-navigation {
+	clear: both;
+	display: block;
+	float: left;
+	width: 100%;
+
+	> div > ul {
+		position: absolute;
+		top: 3.2rem;
+		-webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+		-moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+		box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+	}
+
+	ul {
+		display: none;
+		list-style: none;
+		margin: 0;
+		padding-left: 0;
+		width: 300px;
+		background: #fff;
+		z-index: 999;
+		position: relative;
+
+		ul {
+			box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+			float: left;
+			position: absolute;
+			top: 0;
+			left: -999em;
+			z-index: 99999;
+
+			ul {
+				left: -999em;
+				top: 0;
+			}
+
+			li {
+				&:hover > ul {
+					left: 100%;
+				}
+			}
+
+			a {
+				width: 100%;
+			}
+
+			:hover > a {
+			}
+
+			a:hover {
+			}
+		}
+
+		li:hover > ul {
+			left: 300px;
+			top: 0;
+			display: block;
+			height: 100%;
+		}
+	}
+	li {
+		&:hover > a {
+		}
+	}
+	a {
+		display: block;
+		padding: .35em 1em;
+		text-decoration: none;
+		border-top: 1px solid #dedede;
+	}
+}
+
+@media (max-width: 768px) {
+	.main-navigation ul li:hover > ul {
+		position: relative;
+		left: 0;
+	}
+}
+
+.main-navigation {
+	button.menu-toggle {
+		border: none;
+		padding: 0;
+		border-radius: 0;
+		.dashicons {
+			width: 50px;
+			height: 50px;
+			font-size: 50px;
+		}
+	}
+}
+
+.menu-toggle {
+	float: left;
+}
+
+.menu-toggle,
+.main-navigation.toggled .nav-menu {
+	display: block;
+}
+
+.comment-navigation,
+.posts-navigation,
+.post-navigation {
+
+	.site-main & {
+		margin: 0 0 1.5em;
+		overflow: hidden;
+	}
+
+	& .nav-previous {
+		float: left;
+		width: 50%;
+	}
+
+	& .nav-next {
+		float: right;
+		text-align: right;
+		width: 50%;
+	}
+}
+
+
+.top_menu {
+	// align-self: flex-end;
+	flex-basis: auto;
+	width: 100%;
+	ul {
+		margin-left: 0;
+		list-style: none;
+		list-style-type: none;
+		margin: 0;
+		float: right;
+		li {
+			float: left;
+			a {
+				color: #555;
+				font-size: .8em;
+				padding: 5px 10px;
+			}
+		}
+	}
+}
+
+.navigation.row {
+	padding-top: 0;
+}
+
+.primary-menu-label {
+	display: block;
+	padding: 1rem 2rem;
+	font-size: 1.2rem;
+}

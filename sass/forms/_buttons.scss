@@ -1,0 +1,30 @@
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.woocommerce #respond input#submit,
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button {
+font-size: 100%;
+  margin: 0;
+  line-height: 1;
+  cursor: pointer;
+  position: relative;
+  font-family: inherit;
+  text-decoration: none;
+  overflow: visible;
+  padding: .618em 1em;
+  font-weight: 700;
+  border-radius: 0;
+  left: auto;
+  color: #515151;
+  background-color: #ebe9eb;
+  border: 0;
+  white-space: nowrap;
+  display: inline-block;
+  background-image: none;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  text-shadow: none;
+}
