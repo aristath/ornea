@@ -1,14 +1,39 @@
 <?php
+/**
+ * Additional sanitization methods for controls.
+ * These are used in the field's 'sanitize_callback' argument.
+ *
+ * @package     Kirki
+ * @category    Core
+ * @author      Aristeides Stathopoulos
+ * @copyright   Copyright (c) 2015, Aristeides Stathopoulos
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0
+ */
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+// Early exit if the class already exists
+if ( class_exists( 'Kirki_Sanitize' ) ) {
+	return;
+}
 
 class Kirki_Sanitize {
 
 	/**
-	 * Sanitize checkbox options
+	 * Checkbox sanitization callback.
 	 *
-	 * @since 0.5
+	 * Sanitization callback for 'checkbox' type controls. This callback sanitizes `$checked`
+	 * as a boolean value, either TRUE or FALSE.
+	 *
+	 * @param bool|string $checked Whether the checkbox is checked.
+	 * @return bool Whether the checkbox is checked.
 	 */
-	public static function checkbox( $value ) {
-		return ( 'on' != $value ) ? false : $value;
+	public static function checkbox( $checked ) {
+		return ( ( isset( $checked ) && ( true == $checked || 'on' == $checked ) ) ? true : false );
 	}
 
 	/**
@@ -21,102 +46,57 @@ class Kirki_Sanitize {
 	}
 
 	/**
-	 * Sanitize a value from a list of allowed values.
+	 * Select sanitization callback example.
 	 *
-	 * @since 0.5
+	 * - Control: select, radio
 	 *
-	 * @param  mixed    $input      The value to sanitize.
-	 * @param  mixed    $setting    The setting for which the sanitizing is occurring.
+	 * Sanitization callback for 'select' and 'radio' type controls. This callback sanitizes `$input`
+	 * as a slug, and then validates `$input` against the choices defined for the control.
+	 *
+	 * @see sanitize_key()               https://developer.wordpress.org/reference/functions/sanitize_key/
+	 * @see $wp_customize->get_control() https://developer.wordpress.org/reference/classes/wp_customize_manager/get_control/
+	 *
+	 * @param string               $input   Slug to sanitize.
+	 * @param WP_Customize_Setting $setting Setting instance.
+	 * @return string Sanitized slug if it is a valid choice; otherwise, the setting default.
 	 */
 	public static function choice( $input, $setting ) {
 
-		global $wp_customize;
-		$config = Kirki_Toolkit::config()->get_all();
+		// Ensure input is a slug.
+		$input = sanitize_key( $input );
 
-		if ( '' != $config['option_name'] ) {
-			return sanitize_key( $input );
+		if ( ! is_object( $setting->manager->get_control( $setting->id ) ) || null == $setting->manager->get_control( $setting->id ) ) {
+			return $input;
+		} else {
+			// Get list of choices from the control associated with the setting.
+			$choices = $setting->manager->get_control( $setting->id )->choices;
+
+			return ( ! is_array( $choices ) || ! is_object( $setting ) || array_key_exists( $input, $choices ) ? $input : $setting->default );
 		}
-
-		$field = $wp_customize->get_control( $setting->id );
-
-		return ( array_key_exists( $input, $field->choices ) ) ? $input : $setting->default;
-
 	}
 
 	/**
-	 * Sanitize background repeat values
+	 * Drop-down Pages sanitization callback.
 	 *
-	 * @since 0.5
-	 */
-	public static function bg_repeat( $value ) {
-		$i18n = Kirki_Toolkit::i18n();
-		$valid = array(
-			'no-repeat' => $i18n['no-repeat'],
-			'repeat'    => $i18n['repeat-all'],
-			'repeat-x'  => $i18n['repeat-x'],
-			'repeat-y'  => $i18n['repeat-y'],
-			'inherit'   => $i18n['inherit'],
-		);
-
-		return ( array_key_exists( $value, $valid ) ) ? $value : 'inherit';
-
-	}
-
-	/**
-	 * Sanitize background size values
+	 * - Sanitization: dropdown-pages
+	 * - Control: dropdown-pages
 	 *
-	 * @since 0.5
-	 */
-	public static function bg_size( $value ) {
-		$i18n = Kirki_Toolkit::i18n();
-		$valid = array(
-			'inherit' => $i18n['inherit'],
-			'cover'   => $i18n['cover'],
-			'contain' => $i18n['contain'],
-		);
-
-		return ( array_key_exists( $value, $valid ) ) ? $value : 'inherit';
-
-	}
-
-	/**
-	 * Sanitize background attachment values
+	 * Sanitization callback for 'dropdown-pages' type controls. This callback sanitizes `$page_id`
+	 * as an absolute integer, and then validates that $input is the ID of a published page.
 	 *
-	 * @since 0.5
-	 */
-	public static function bg_attach( $value ) {
-		$i18n = Kirki_Toolkit::i18n();
-		$valid = array(
-			'inherit' => $i18n['inherit'],
-			'fixed'   => $i18n['fixed'],
-			'scroll'  => $i18n['scroll'],
-		);
-
-		return ( array_key_exists( $value, $valid ) ) ? $value : 'inherit';
-
-	}
-
-	/**
-	 * Sanitize background position values
+	 * @see absint() https://developer.wordpress.org/reference/functions/absint/
+	 * @see get_post_status() https://developer.wordpress.org/reference/functions/get_post_status/
 	 *
-	 * @since 0.5
+	 * @param int                  $page_id    Page ID.
+	 * @param WP_Customize_Setting $setting Setting instance.
+	 * @return int|string Page ID if the page is published; otherwise, the setting default.
 	 */
-	public static function bg_position( $value ) {
-		$i18n = Kirki_Toolkit::i18n();
-		$valid = array(
-			'left-top'      => $i18n['left-top'],
-			'left-center'   => $i18n['left-center'],
-			'left-bottom'   => $i18n['left-bottom'],
-			'right-top'     => $i18n['right-top'],
-			'right-center'  => $i18n['right-center'],
-			'right-bottom'  => $i18n['right-bottom'],
-			'center-top'    => $i18n['center-top'],
-			'center-center' => $i18n['center-center'],
-			'center-bottom' => $i18n['center-bottom'],
-		);
+	public static function dropdown_pages( $page_id, $setting ) {
+		// Ensure $input is an absolute integer.
+		$page_id = absint( $page_id );
 
-		return ( array_key_exists( $value, $valid ) ) ? $value : 'center-center';
-
+		// If $page_id is an ID of a published page, return it; otherwise, return the default.
+		return ( 'publish' == get_post_status( $page_id ) ? $page_id : $setting->default );
 	}
 
 	/**
@@ -152,9 +132,9 @@ class Kirki_Sanitize {
 		}
 
 		// By now we know the string is formatted as an rgba color so we need to further sanitize it.
-		$value  = str_replace( ' ', '', $value );
+		$value = str_replace( ' ', '', $value );
 		sscanf( $value, 'rgba(%d,%d,%d,%f)', $red, $green, $blue, $alpha );
-		return 'rgba(' . $red . ',' . $green . ',' . $blue . ',' . $alpha . ')';
+		return 'rgba('.$red.','.$green.','.$blue.','.$alpha.')';
 
 	}
 
@@ -181,7 +161,7 @@ class Kirki_Sanitize {
 	/**
 	 * multicheck callback
 	 */
-	function multicheck( $values ) {
+	public static function multicheck( $values ) {
 
 		$multi_values = ( ! is_array( $values ) ) ? explode( ',', $values ) : $values;
 		return ( ! empty( $multi_values ) ) ? array_map( 'sanitize_text_field', $multi_values ) : array();

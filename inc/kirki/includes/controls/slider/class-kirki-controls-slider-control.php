@@ -1,9 +1,27 @@
 <?php
-
 /**
- * Create a jQuery slider control.
+ * slider Customizer Control.
+ *
+ * Creates a jQuery slider control.
  * TODO: Migrate to an HTML5 range control. Range control are hard to style 'cause they don't display the value
+ *
+ * @package     Kirki
+ * @subpackage  Controls
+ * @copyright   Copyright (c) 2015, Aristeides Stathopoulos
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0
  */
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+// Early exit if the class already exists
+if ( class_exists( 'Kirki_Controls_Slider_Control' ) ) {
+	return;
+}
+
 class Kirki_Controls_Slider_Control extends WP_Customize_Control {
 
 	public $type = 'slider';
@@ -12,7 +30,7 @@ class Kirki_Controls_Slider_Control extends WP_Customize_Control {
 
 		wp_enqueue_script( 'jquery-ui' );
 		wp_enqueue_script( 'jquery-ui-slider' );
-		wp_enqueue_style( 'kirki-slider', trailingslashit( KIRKI_URL ) . 'includes/controls/slider/style.css' );
+		wp_enqueue_style( 'kirki-slider', trailingslashit( kirki_url() ).'includes/controls/slider/style.css' );
 
 	}
 

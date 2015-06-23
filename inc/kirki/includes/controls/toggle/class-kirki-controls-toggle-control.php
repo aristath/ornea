@@ -1,16 +1,32 @@
 <?php
-
 /**
- * Creates a toggle control
+ * toggle Customizer Control.
+ *
+ * @package     Kirki
+ * @subpackage  Controls
+ * @copyright   Copyright (c) 2015, Aristeides Stathopoulos
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0
  */
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+// Early exit if the class already exists
+if ( class_exists( 'Kirki_Controls_Toggle_Control' ) ) {
+	return;
+}
+
 class Kirki_Controls_Toggle_Control extends WP_Customize_Control {
 
 	public $type = 'toggle';
 
 	public function enqueue() {
-        wp_enqueue_script( 'kirki-switch', trailingslashit( KIRKI_URL ) . 'includes/controls/switch/kirki-switch.js', array( 'jquery' ) );
-		wp_enqueue_style( 'kirki-switch', trailingslashit( KIRKI_URL ) . 'includes/controls/switch/style.css' );
-    }
+		wp_enqueue_script( 'kirki-switch', trailingslashit( kirki_url() ).'includes/controls/switch/kirki-switch.js', array( 'jquery' ) );
+		wp_enqueue_style( 'kirki-switch', trailingslashit( kirki_url() ).'includes/controls/switch/style.css' );
+	}
 
 	/**
 	 * Render the control's content.

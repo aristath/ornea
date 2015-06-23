@@ -45,16 +45,16 @@ class Ornea {
 	private function include_required_files() {
 
 		/**
-		 * Customizer additions.
-		 */
-		require get_template_directory() . '/inc/customizer.php';
-
-		/**
 		 * If Kirki is not already installed, use the included version
 		 */
 		if ( ! class_exists( 'Kirki' ) ) {
 			require get_template_directory() . '/inc/kirki/kirki.php';
 		}
+
+		/**
+		 * Customizer additions.
+		 */
+		require get_template_directory() . '/inc/customizer.php';
 
 		/**
 		 * Include additional theme classes

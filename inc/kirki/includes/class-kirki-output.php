@@ -1,9 +1,26 @@
 <?php
-
 /**
  * Generates the styles for the frontend.
  * Handles the 'output' argument of fields
+ *
+ * @package     Kirki
+ * @category    Core
+ * @author      Aristeides Stathopoulos
+ * @copyright   Copyright (c) 2015, Aristeides Stathopoulos
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0
  */
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+// Early exit if the class already exists
+if ( class_exists( 'Kirki_Output' ) ) {
+	return;
+}
+
 class Kirki_Output {
 
 	public static $settings = null;
@@ -39,7 +56,7 @@ class Kirki_Output {
 		} else {
 			self::$output[0] = $output;
 		}
-		self::$value    = self::get_value( $setting, $callback );
+		self::$value = self::get_value();
 
 		return self::styles_parse();
 
@@ -47,10 +64,17 @@ class Kirki_Output {
 
 	public static function get_value() {
 
+		$default = '';
+		if ( isset( Kirki::$fields[ self::$settings ] ) && isset( Kirki::$fields[ self::$settings ]['default'] ) ) {
+			if ( ! is_array( Kirki::$fields[ self::$settings ]['default'] ) ) {
+				$default = Kirki::$fields[ self::$settings ]['default'];
+			}
+		}
+
 		if ( 'theme_mod' == self::$type ) {
-			$value = get_theme_mod( self::$settings );
+			$value = get_theme_mod( self::$settings, $default );
 		} else {
-			$value = get_option( self::$settings );
+			$value = get_option( self::$settings, $default );
 		}
 
 		if ( '' != self::$callback ) {
@@ -64,7 +88,7 @@ class Kirki_Output {
 	/**
 	 * Gets the array of generated styles and creates the minimized, inline CSS
 	 *
-	 * @return string	the generated CSS.
+	 * @return string|null	the generated CSS.
 	 */
 	public static function styles_parse() {
 
@@ -78,9 +102,12 @@ class Kirki_Output {
 		}
 
 		foreach ( $styles as $style => $style_array ) {
-			$css .= $style . '{';
+			$css .= $style.'{';
 			foreach ( $style_array as $property => $value ) {
-				$css .= $property . ':' . $value . ';';
+				if ( 'background-image' == $property || 'background' == $property && false !== filter_var( $value, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED ) ) {
+					$value = 'url("'.$value.'")';
+				}
+				$css .= $property.':'.$value.';';
 			}
 			$css .= '}';
 		}
@@ -97,15 +124,11 @@ class Kirki_Output {
 		$styles = array();
 
 		foreach ( self::$output as $output ) {
-
 			$prefix = ( isset( $output['prefix'] ) ) ? $output['prefix'] : '';
-			$suffix = ( isset( $output['suffix'] ) ) ? $output['suffix'] : '';
-			$units  = ( isset( $output['units'] ) )  ? $output['units']  : '';
-
+			$units  = ( isset( $output['units'] ) ) ? $output['units'] : '';
 			if ( isset( $output['element'] ) && isset( $output['property'] ) ) {
-				$styles[$prefix . $output['element']][$output['property']] = self::$value . $units;
+				$styles[ $prefix.$output['element'] ][ $output['property'] ] = self::$value.$units;
 			}
-
 		}
 
 		return $styles;

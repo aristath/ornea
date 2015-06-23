@@ -1,8 +1,27 @@
 <?php
-
 /**
- * The API class.
+ * The Kirki API class.
+ * Takes care of adding panels, sections & fields to the customizer.
+ * For documentation please see https://github.com/reduxframework/kirki/wiki
+ *
+ * @package     Kirki
+ * @category    Core
+ * @author      Aristeides Stathopoulos
+ * @copyright   Copyright (c) 2015, Aristeides Stathopoulos
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0
  */
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+// Early exit if the class already exists
+if ( class_exists( 'Kirki' ) ) {
+	return;
+}
+
 class Kirki {
 
 	public static $config   = array();
@@ -19,9 +38,9 @@ class Kirki {
 
 	/**
 	 * Helper function that adds the fields, sections and panels to the customizer.
-	 * @var	object	The WordPress Customizer object
+	 * @return void
 	 */
-	public function add_to_customizer( $wp_customize ) {
+	public function add_to_customizer() {
 		$this->fields_from_filters();
 		add_action( 'customize_register', array( $this, 'add_panels' ), 97 );
 		add_action( 'customize_register', array( $this, 'add_sections' ), 98 );
@@ -37,7 +56,11 @@ class Kirki {
 		$fields = apply_filters( 'kirki/controls', array() );
 		$fields = apply_filters( 'kirki/fields', $fields );
 
-		self::$fields = self::process_fields( $fields );
+		if ( ! empty( $fields ) ) {
+			foreach ( $fields as $field ) {
+				self::add_field( 'global', $field );
+			}
+		}
 
 	}
 
@@ -50,21 +73,29 @@ class Kirki {
 	 * @return 	mixed 	the saved value of the field.
 	 *
 	 */
-	public static function get_option(  $config_id = '', $field_id = '' ) {
+	public static function get_option( $config_id = '', $field_id = '' ) {
 
-		if ( ( '' == $field_id ) ) {
-			return null;
+		$value = '';
+
+		if ( ( '' == $field_id ) && '' != $config_id ) {
+			$field_id  = $config_id;
+			$config_id = 'global';
 		}
 
+		$config_id = ( '' == $config_id ) ? 'global' : $config_id;
+
 		// Are we using options or theme_mods?
-		$mode = self::$config[$config_id]['option_type'];
+		$mode = self::$config[ $config_id ]['option_type'];
 		// Is there an option name set?
-		$option_name = ( 'option' == $mode && isset( self::$config[$config_id]['option'] ) ) ? self::$config[$config_id]['option'] : false;
+		$option_name = false;
+		if ( 'option' == $mode && isset( self::$config[ $config_id ]['option'] ) ) {
+			$option_name = self::$config[ $config_id ]['option'];
+		}
 
 		if ( 'theme_mod' == $mode ) {
 
 			// We're using theme_mods
-			$value = get_theme_mod( $field_id, self::$fields[$field_id]['default'] );
+			$value = get_theme_mod( $field_id, self::$fields[ $field_id ]['default'] );
 
 		} elseif ( 'option' == $mode ) {
 
@@ -73,13 +104,13 @@ class Kirki {
 
 				// Options are serialized as a single option in the db
 				$options = get_option( $option_name );
-				$value   = ( isset( $options[$field_id] ) ) ? $options[$field_id] : self::$fields[$field_id]['default'];
+				$value   = ( isset( $options[ $field_id ] ) ) ? $options[ $field_id ] : self::$fields[ $field_id ]['default'];
 				$value   = maybe_unserialize( $value );
 
 			} else {
 
 				// Each option separately saved in the db
-				$value = get_option( $field_id, self::$fields[$field_id]['default'] );
+				$value = get_option( $field_id, self::$fields[ $field_id ]['default'] );
 
 			}
 
@@ -87,10 +118,10 @@ class Kirki {
 
 		if ( defined( 'KIRKI_REDUX_COMPATIBILITY' ) && KIRKI_REDUX_COMPATIBILITY ) {
 
-			switch ( self::$fields[$field_id]['type'] ) {
+			switch ( self::$fields[ $field_id ]['type'] ) {
 
 				case 'image' :
-					$value = Kirki_Helpers::get_image_from_url( $value );
+					$value = Kirki_Helper::get_image_from_url( $value );
 					break;
 
 			}
@@ -110,10 +141,10 @@ class Kirki {
 	public static function add_config( $config_id, $args = array() ) {
 
 		$default_args = array(
-			'capability'    => 'edit_theme_options',
-			'option_type'   => 'theme_mod',
-			'option'        => '',
-			'compiler'      => array(),
+			'capability'  => 'edit_theme_options',
+			'option_type' => 'theme_mod',
+			'option'      => '',
+			'compiler'    => array(),
 		);
 		$args = array_merge( $default_args, $args );
 
@@ -121,7 +152,7 @@ class Kirki {
 		$config_id = ( '' == $config_id ) ? 'global' : $config_id;
 
 		// Set the config
-		self::$config[$config_id] = $args;
+		self::$config[ $config_id ] = $args;
 
 	}
 
@@ -135,9 +166,10 @@ class Kirki {
 
 			foreach ( self::$panels as $panel ) {
 				$wp_customize->add_panel( sanitize_key( $panel['id'] ), array(
-					'title'       => $panel['title'],
-					'priority'    => $panel['priority'],
-					'description' => $panel['description'],
+					'title'           => esc_textarea( $panel['title'] ),
+					'priority'        => esc_attr( $panel['priority'] ),
+					'description'     => esc_textarea( $panel['description'] ),
+					'active_callback' => $panel['active_callback'],
 				) );
 			}
 
@@ -154,10 +186,11 @@ class Kirki {
 
 			foreach ( self::$sections as $section ) {
 				$wp_customize->add_section( sanitize_key( $section['id'] ), array(
-					'title'       => $section['title'],
-					'priority'    => $section['priority'],
-					'panel'       => $section['panel'],
-					'description' => $section['description'],
+					'title'           => esc_textarea( $section['title'] ),
+					'priority'        => esc_attr( $section['priority'] ),
+					'panel'           => esc_attr( $section['panel'] ),
+					'description'     => esc_textarea( $section['description'] ),
+					'active_callback' => $section['active_callback'],
 				) );
 			}
 
@@ -171,37 +204,60 @@ class Kirki {
 	 */
 	public function add_fields( $wp_customize ) {
 
+		$control_types = apply_filters( 'kirki/control_types', array(
+			'color'           	=> 'WP_Customize_Color_Control',
+			'color-alpha'     	=> 'Kirki_Controls_Color_Alpha_Control',
+			'image'           	=> 'WP_Customize_Image_Control',
+			'upload'          	=> 'WP_Customize_Upload_Control',
+			'switch'          	=> 'Kirki_Controls_Switch_Control',
+			'toggle'          	=> 'Kirki_Controls_Toggle_Control',
+			'radio-buttonset' 	=> 'Kirki_Controls_Radio_ButtonSet_Control',
+			'radio-image'     	=> 'Kirki_Controls_Radio_Image_Control',
+			'sortable'        	=> 'Kirki_Controls_Sortable_Control',
+			'slider'          	=> 'Kirki_Controls_Slider_Control',
+			'number'          	=> 'Kirki_Controls_Number_Control',
+			'multicheck'      	=> 'Kirki_Controls_MultiCheck_Control',
+			'palette'         	=> 'Kirki_Controls_Palette_Control',
+			'custom'          	=> 'Kirki_Controls_Custom_Control',
+			'editor'          	=> 'Kirki_Controls_Editor_Control',
+			'select2'         	=> 'Kirki_Controls_Select2_Control',
+			'select2-multiple'	=> 'Kirki_Controls_Select2_Multiple_Control'
+		) );
+
 		foreach ( self::$fields as $field ) {
+
 			if ( 'background' != $field['type'] ) {
-				Kirki()->settings->add( $wp_customize, $field );
-				Kirki()->controls->add( $wp_customize, $field );
+
+				$wp_customize->add_setting( Kirki_Field::sanitize_settings( $field ), array(
+					'default'           => Kirki_Field::sanitize_default( $field ),
+					'type'              => Kirki_Field::sanitize_type( $field ),
+					'capability'        => Kirki_Field::sanitize_capability( $field ),
+					'transport'         => Kirki_Field::sanitize_transport( $field ),
+					'sanitize_callback' => Kirki_Field::sanitize_callback( $field ),
+				) );
+
+				if ( array_key_exists( $field['type'], $control_types ) ) {
+
+					$class_name = $control_types[ $field['type'] ];
+					$wp_customize->add_control( new $class_name(
+						$wp_customize,
+						Kirki_Field::sanitize_id( $field ),
+						Kirki_Field::sanitize_field( $field )
+					) );
+
+				} else {
+
+					$wp_customize->add_control( new WP_Customize_Control(
+						$wp_customize,
+						Kirki_Field::sanitize_id( $field ),
+						Kirki_Field::sanitize_field( $field )
+					) );
+
+				}
+
 			}
+
 		}
-
-	}
-
-	/**
-	 * Processes the array of fields and applies any necessary modifications
-	 */
-	public static function process_fields( $fields ) {
-
-		// Sanitize the 'settings' argument
-		foreach ( $fields as $field ) {
-			$field['settings'] = Kirki_Field::sanitize_settings( $field );
-			$fields[] = $field;
-		}
-		// Build the background fields
-		$fields = Kirki_Field::build_background_fields( $fields );
-
-		$fields_sanitized = array();
-		foreach ( $fields as $key => $field ) {
-			// Sanitize field
-			$field = Kirki_Field::sanitize_field( $field );
-			// Add the field to the static $fields variable properly indexed
-			$fields_sanitized[$field['settings']] = $field;
-		}
-
-		return $fields_sanitized;
 
 	}
 
@@ -211,13 +267,17 @@ class Kirki {
 	 * @var		string		the ID for this panel
 	 * @var		array		the panel arguments
 	 */
-	public static function add_panel( $id, $args ) {
+	public static function add_panel( $id = '', $args = array() ) {
 
 		// Add the section to the $fields variable
-		$args['id']          = $id;
-		$args['description'] = ( isset( $args['description'] ) ) ? $args['description'] : '';
-		$args['priority']    = ( isset( $args['priority'] ) ) ? $args['priority'] : 10;
-		self::$panels[]      = $args;
+		$args['id']          = esc_attr( $id );
+		$args['description'] = ( isset( $args['description'] ) ) ? esc_textarea( $args['description'] ) : '';
+		$args['priority']    = ( isset( $args['priority'] ) ) ? esc_attr( $args['priority'] ) : 10;
+		if ( ! isset( $args['active_callback'] ) ) {
+			$args['active_callback'] = ( isset( $args['required'] ) ) ? 'kirki_active_callback' : '__return_true';
+		}
+
+		self::$panels[$args['id']] = $args;
 
 	}
 
@@ -230,11 +290,15 @@ class Kirki {
 	public static function add_section( $id, $args ) {
 
 		// Add the section to the $fields variable
-		$args['id']          = $id;
-		$args['panel']       = ( isset( $args['panel'] ) ) ? $args['panel'] : '';
-		$args['description'] = ( isset( $args['description'] ) ) ? $args['description'] : '';
-		$args['priority']    = ( isset( $args['priority'] ) ) ? $args['priority'] : 10;
-		self::$sections[]    = $args;
+		$args['id']          = esc_attr( $id );
+		$args['panel']       = ( isset( $args['panel'] ) ) ? esc_attr( $args['panel'] ) : '';
+		$args['description'] = ( isset( $args['description'] ) ) ? esc_textarea( $args['description'] ) : '';
+		$args['priority']    = ( isset( $args['priority'] ) ) ? esc_attr( $args['priority'] ) : 10;
+		if ( ! isset( $args['active_callback'] ) ) {
+			$args['active_callback'] = ( isset( $args['required'] ) ) ? 'kirki_active_callback' : '__return_true';
+		}
+
+		self::$sections[ $args['id'] ] = $args;
 
 	}
 
@@ -246,12 +310,15 @@ class Kirki {
 	 */
 	public static function add_field( $config_id, $args ) {
 
-		if ( '' == $config_id ) {
+		if ( is_array( $config_id ) && empty( $args ) ) {
+			$args      = $config_id;
 			$config_id = 'global';
 		}
 
+		$config_id = ( '' == $config_id ) ? 'global' : $config_id;
+
 		// Get the configuration options
-		$config = self::$config[$config_id];
+		$config = self::$config[ $config_id ];
 
 		/**
 		 * If we've set an option in the configuration
@@ -278,6 +345,14 @@ class Kirki {
 		}
 
 		/**
+		 * Check if [settings] is set.
+		 * If not set, check for [setting]
+		 */
+		if ( ! isset( $args['settings'] ) && isset( $args['setting'] ) ) {
+			$args['settings'] = $args['setting'];
+		}
+
+		/**
 		 * If no option-type has been set for the field,
 		 * use the one from the configuration
 		 */
@@ -285,14 +360,12 @@ class Kirki {
 			$args['option_type'] = $config['option_type'];
 		}
 
-		// Sanitize field
-		$field = Kirki_Field::sanitize_field( $args );
 		// Add the field to the static $fields variable properly indexed
-		self::$fields[$field['settings']] = $field;
+		self::$fields[Kirki_Field::sanitize_settings( $args )] = $args;
 
 		if ( 'background' == $args['type'] ) {
 			// Build the background fields
-			self::$fields = Kirki_Field::build_background_fields( $fields );
+			self::$fields = Kirki_Field::build_background_fields( self::$fields );
 		}
 
 	}
@@ -302,7 +375,7 @@ class Kirki {
 	 *
 	 * @return array 	('variable-name' => value)
 	 */
-	function get_variables() {
+	public function get_variables() {
 
 		$variables = array();
 
@@ -317,9 +390,9 @@ class Kirki {
 						$variable_callback = ( isset( $field_variable['callback'] ) && is_callable( $field_variable['callback'] ) ) ? $field_variable['callback'] : false;
 
 						if ( $variable_callback ) {
-							$variables[$field_variable['name']] = call_user_func( $field_variable['callback'], kirki_get_option( $field['settings'] ) );
+							$variables[ $variable_name ] = call_user_func( $field_variable['callback'], self::get_option( Kirki_Field::sanitize_settings( $field ) ) );
 						} else {
-							$variables[$field_variable['name']] = self::get_option( $field['settings'] );
+							$variables[ $variable_name ] = self::get_option( $field['settings'] );
 						}
 
 					}

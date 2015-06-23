@@ -1,50 +1,62 @@
 <?php
-
 /**
  * Creates the google-fonts link.
+ *
+ * @package     Kirki
+ * @category    Core
+ * @author      Aristeides Stathopoulos
+ * @copyright   Copyright (c) 2015, Aristeides Stathopoulos
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0
  */
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+// Early exit if the class already exists
+if ( class_exists( 'Kirki_Scripts_Frontend_Google_Fonts' ) ) {
+	return;
+}
+
 class Kirki_Scripts_Frontend_Google_Fonts {
 
 	public function __construct() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'google_font' ), 105 );
 	}
 
-	function google_link() {
+	public function google_link() {
 
 		$fields = Kirki::$fields;
 
 		// Early exit if no fields are found.
-		if ( ! $fields || empty( $fields ) ) {
+		if ( empty( $fields ) ) {
 			return;
 		}
-
-		// Get an array of all the google fonts
-		$google_fonts = Kirki_Toolkit::fonts()->get_google_fonts();
 
 		$fonts = array();
 		foreach ( $fields as $field ) {
 
-			if ( isset( $field['output'] ) ) {
+			$field['output']       = Kirki_Field::sanitize_output( $field );
+			$field['settings_raw'] = Kirki_Field::sanitize_settings_raw( $field );
 
-				// Check if this is a font-family control
-				$is_font_family = isset( $field['output']['property'] ) && 'font-family' == $field['output']['property'] ? true : false;
+			if ( isset( $field['output'] ) && is_array( $field['output'] ) ) {
 
-				// Check if this is a font-weight control
-				$is_font_weight = isset( $field['output']['property'] ) && 'font-weight' == $field['output']['property'] ? true : false;
+				foreach ( $field['output'] as $output ) {
 
-				// Check if this is a font subset control
-				$is_font_subset = isset( $field['output']['property'] ) && 'font-subset' == $field['output']['property'] ? true : false;
+					if ( in_array( $output['property'], array( 'font-family', 'font-weight', 'font-subset' ) ) ) {
+						// The value of this control
+						$value = Kirki::get_option( $field['settings_raw'] );
 
-				if ( $is_font_family || $is_font_weight || $is_font_subset ) {
-					// The value of this control
-					$value = kirki_get_option( $field['settings_raw'] );
+						if ( 'font-family' == $output['property'] ) {
+							$fonts[]['font-family'] = $value;
+						} else if ( 'font-weight' == $output['property'] ) {
+							$fonts[]['font-weight'] = $value;
+						} else if ( 'font-subset' == $output['property'] ) {
+							$fonts[]['subsets'] = $value;
+						}
 
-					if ( $is_font_family ) {
-						$fonts[]['font-family'] = $value;
-					} else if ( $is_font_weight ) {
-						$fonts[]['font-weight'] = $value;
-					} else if ( $is_font_subset ) {
-						$fonts[]['subsets'] = $value;
 					}
 
 				}
@@ -83,8 +95,8 @@ class Kirki_Scripts_Frontend_Google_Fonts {
 		}
 
 		$font_families = ( ! isset( $font_families ) || empty( $font_families ) ) ? false : $font_families;
-		$font_weights  = ( ! isset( $font_weights )  || empty( $font_weights ) )  ? '400' : $font_weights;
-		$font_subsets  = ( ! isset( $font_subsets )  || empty( $font_subsets ) )  ? 'all' : $font_subsets;
+		$font_weights  = ( ! isset( $font_weights ) || empty( $font_weights ) ) ? '400' : $font_weights;
+		$font_subsets  = ( ! isset( $font_subsets ) || empty( $font_subsets ) ) ? 'all' : $font_subsets;
 
 		if ( ! isset( $has_google_font ) || ! $has_google_font ) {
 			$font_families = false;
@@ -97,7 +109,7 @@ class Kirki_Scripts_Frontend_Google_Fonts {
 	/**
 	 * Enqueue Google fonts if necessary
 	 */
-	function google_font() {
+	public function google_font() {
 		if ( $this->google_link() ) {
 			$google_link = str_replace( '%3A', ':', $this->google_link() );
 			wp_enqueue_style( 'kirki_google_fonts', $google_link, array(), null );

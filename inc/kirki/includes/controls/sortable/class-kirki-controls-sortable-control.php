@@ -1,9 +1,24 @@
 <?php
-
 /**
- * Create a sortable control.
- * This will display a list of checkboxes that can be sorted.
+ * sortable Customizer Control.
+ *
+ * @package     Kirki
+ * @subpackage  Controls
+ * @copyright   Copyright (c) 2015, Aristeides Stathopoulos
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0
  */
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+// Early exit if the class already exists
+if ( class_exists( 'Kirki_Controls_Sortable_Control' ) ) {
+	return;
+}
+
 class Kirki_Controls_Sortable_Control extends WP_Customize_Control {
 
 	public $type = 'sortable';
@@ -13,10 +28,10 @@ class Kirki_Controls_Sortable_Control extends WP_Customize_Control {
 		wp_enqueue_script( 'jquery-ui-core' );
 		wp_enqueue_script( 'jquery-ui-sortable' );
 
-        wp_enqueue_script( 'kirki-sortable', trailingslashit( KIRKI_URL ) . 'includes/controls/sortable/kirki-sortable.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-sortable' ) );
-		wp_enqueue_style( 'kirki-sortable', trailingslashit( KIRKI_URL ) . 'includes/controls/sortable/style.css' );
+		wp_enqueue_script( 'kirki-sortable', trailingslashit( kirki_url() ).'includes/controls/sortable/kirki-sortable.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-sortable' ) );
+		wp_enqueue_style( 'kirki-sortable', trailingslashit( kirki_url() ).'includes/controls/sortable/style.css' );
 
-    }
+	}
 
 
 	public function render_content() {

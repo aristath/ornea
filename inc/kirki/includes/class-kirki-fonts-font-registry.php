@@ -1,11 +1,25 @@
 <?php
-
 /**
- * Class FontManager
- * @package Kirki
- *
  * Provides access to fonts available for selection in the controls
+ *
+ * @package     Kirki
+ * @category    Core
+ * @author      Aristeides Stathopoulos
+ * @copyright   Copyright (c) 2015, Aristeides Stathopoulos
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0
  */
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+// Early exit if the class already exists
+if ( class_exists( 'Kirki_Fonts_Font_Registry' ) ) {
+	return;
+}
+
 class Kirki_Fonts_Font_Registry {
 
 	/** @var array */
@@ -29,7 +43,7 @@ class Kirki_Fonts_Font_Registry {
 		$standard_fonts = $this->get_standard_fonts();
 		$google_fonts   = $this->get_google_fonts();
 
-		return apply_filters('kirki/fonts/all', array_merge($standard_fonts, $google_fonts));
+		return apply_filters( 'kirki/fonts/all', array_merge( $standard_fonts, $google_fonts ) );
 	}
 
 	/**
@@ -54,7 +68,7 @@ class Kirki_Fonts_Font_Registry {
 	 *
 	 * @return boolean
 	 */
-	public function is_google_font($font) {
+	public function is_google_font( $font ) {
 		$allowed_fonts = $this->get_google_fonts();
 		return ( array_key_exists( $font, $allowed_fonts ) ) ? true : false;
 	}
@@ -76,7 +90,7 @@ class Kirki_Fonts_Font_Registry {
 			// Verify that the font exists
 			if ( $this->is_google_font( $font ) ) {
 				// Build the family name and variant string (e.g., "Open+Sans:regular,italic,700")
-				$family[] = $font . ':' . join( ',', $this->choose_google_font_variants( $font, $allowed_fonts[$font]['variants'] ) );
+				$family[] = $font.':'.join( ',', $this->choose_google_font_variants( $font, $allowed_fonts[ $font ]['variants'] ) ).',';
 			}
 		}
 
@@ -84,11 +98,11 @@ class Kirki_Fonts_Font_Registry {
 		if ( empty( $family ) ) {
 			return '';
 		} else {
-			$request = str_replace( ' ', '+', '//fonts.googleapis.com/css?family=' . implode( '|', $family ) );
+			$request = str_replace( ' ', '+', '//fonts.googleapis.com/css?family='.implode( '|', $family ) );
 		}
 
 		// load the font weight
-		$weight = ( is_array( $weight ) ) ? implode( ',', $weight ) : $weight;
+		$weight   = ( is_array( $weight ) ) ? implode( ',', $weight ) : $weight;
 		$request .= trim( $weight );
 
 		// Load the font subset
@@ -101,11 +115,11 @@ class Kirki_Fonts_Font_Registry {
 			// Build the array
 			$subsets = array_keys( $subsets_available );
 		} else {
-			$subsets = (array)$subset;
+			$subsets = (array) $subset;
 		}
 
 		// Append the subset string
-		$request .= ( ! empty( $subsets ) ) ? '&subset=' . join( ',', $subsets ) : '';
+		$request .= ( ! empty( $subsets ) ) ? '&subset='.join( ',', $subsets ) : '';
 
 		return $request;
 	}
@@ -141,7 +155,7 @@ class Kirki_Fonts_Font_Registry {
 	 * @param  array     $variants    The variants for the font.
 	 * @return array                  The chosen variants.
 	 */
-	public function choose_google_font_variants($font, $variants = array()) {
+	public function choose_google_font_variants( $font, $variants = array() ) {
 		$chosen_variants = array();
 
 		if ( empty( $variants ) ) {
@@ -168,7 +182,7 @@ class Kirki_Fonts_Font_Registry {
 			$chosen_variants[] = '700';
 		}
 
-		return apply_filters( 'kirki/font/variants', array_unique($chosen_variants), $font, $variants );
+		return apply_filters( 'kirki/font/variants', array_unique( $chosen_variants ), $font, $variants );
 	}
 
 	/**
@@ -178,21 +192,21 @@ class Kirki_Fonts_Font_Registry {
 	 */
 	public function get_standard_fonts() {
 		$i18n = Kirki_Toolkit::i18n();
-		if ($this->standard_fonts==null) {
-			$this->standard_fonts = apply_filters('kirki/fonts/standard_fonts', array(
+		if ( $this->standard_fonts == null ) {
+			$this->standard_fonts = apply_filters( 'kirki/fonts/standard_fonts', array(
 				'serif'      => array(
 					'label' => $i18n['serif'],
-					'stack' => 'Georgia,Times,"Times New Roman",serif'
+					'stack' => 'Georgia,Times,"Times New Roman",serif',
 				),
 				'sans-serif' => array(
 					'label' => $i18n['sans-serif'],
-					'stack' => '"Helvetica Neue",Helvetica,Arial,sans-serif'
+					'stack' => '"Helvetica Neue",Helvetica,Arial,sans-serif',
 				),
 				'monospace'  => array(
 					'label' => $i18n['monospace'],
-					'stack' => 'Monaco,"Lucida Sans Typewriter","Lucida Typewriter","Courier New",Courier,monospace'
-				)
-			));
+					'stack' => 'Monaco,"Lucida Sans Typewriter","Lucida Typewriter","Courier New",Courier,monospace',
+				),
+			) );
 		}
 
 		return $this->standard_fonts;
@@ -216,7 +230,7 @@ class Kirki_Fonts_Font_Registry {
 		if ( isset( $all_fonts[ $font ]['stack'] ) && ! empty( $all_fonts[ $font ]['stack'] ) ) {
 			$stack = $all_fonts[ $font ]['stack'];
 		} else {
-			$stack = '"' . $font . '",' . $sans;
+			$stack = '"'.$font.'",'.$sans;
 		}
 
 		return $stack;
@@ -249,26 +263,26 @@ class Kirki_Fonts_Font_Registry {
 		global $wp_filesystem;
 		// Initialize the WP filesystem, no more using 'file-put-contents' function
 		if ( empty( $wp_filesystem ) ) {
-		    require_once ( ABSPATH . '/wp-admin/includes/file.php' );
-		    WP_Filesystem();
+			require_once ( ABSPATH.'/wp-admin/includes/file.php' );
+			WP_Filesystem();
 		}
 
-		if ( null == $this->google_fonts  ) {
-			$json = $wp_filesystem->get_contents( KIRKI_PATH . '/assets/json/webfonts.json' );
+		if ( null == $this->google_fonts ) {
+			$json = $wp_filesystem->get_contents( KIRKI_PATH.'/assets/json/webfonts.json' );
 
 			// Get the list of fonts from our json file and convert to an array
-			$fonts = json_decode( $json, true);
+			$fonts = json_decode( $json, true );
 
 			$google_fonts = array();
-			foreach ($fonts['items'] as $font) {
-				$google_fonts[$font['family']] = array(
+			foreach ( $fonts['items'] as $font ) {
+				$google_fonts[ $font['family'] ] = array(
 					'label'    => $font['family'],
 					'variants' => $font['variants'],
 					'subsets'  => $font['subsets'],
 				);
 			}
 
-			$this->google_fonts = apply_filters('kirki/fonts/google_fonts', $google_fonts);
+			$this->google_fonts = apply_filters( 'kirki/fonts/google_fonts', $google_fonts );
 		}
 
 		return $this->google_fonts;
