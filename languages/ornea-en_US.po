@@ -1,0 +1,849 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ornea\n"
+"POT-Creation-Date: 2015-06-27 16:45+0200\n"
+"PO-Revision-Date: 2015-06-27 16:46+0200\n"
+"Last-Translator: Stathopoulos Aristeides <info@aristeides.com>\n"
+"Language-Team: Stathopoulos Aristeides <info@aristeides.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: style.css\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: 404.php:15
+msgid "Oops! That page can&rsquo;t be found."
+msgstr "Oops! That page can&rsquo;t be found."
+
+#: 404.php:19
+msgid ""
+"It looks like nothing was found at this location. Maybe try one of the links "
+"below or a search?"
+msgstr ""
+"It looks like nothing was found at this location. Maybe try one of the links "
+"below or a search?"
+
+#: 404.php:27
+msgid "Most Used Categories"
+msgstr "Most Used Categories"
+
+#. translators: %1$s: smiley
+#: 404.php:44
+#, php-format
+msgid "Try looking in the monthly archives. %1$s"
+msgstr "Try looking in the monthly archives. %1$s"
+
+#: comments.php:28
+#, php-format
+msgctxt "comments title"
+msgid "One thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] "One thought on &ldquo;%2$s&rdquo;"
+msgstr[1] "%1$s thoughts on &ldquo;%2$s&rdquo;"
+
+#: comments.php:35 comments.php:56
+msgid "Comment navigation"
+msgstr "Comment navigation"
+
+#: comments.php:38 comments.php:59
+msgid "Older Comments"
+msgstr "Older Comments"
+
+#: comments.php:39 comments.php:60
+msgid "Newer Comments"
+msgstr "Newer Comments"
+
+#: comments.php:72
+msgid "Comments are closed."
+msgstr "Comments are closed."
+
+#: content-none.php:13
+msgid "Nothing Found"
+msgstr "Nothing Found"
+
+#: content-none.php:19
+#, php-format
+msgid ""
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+
+#: content-none.php:23
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+
+#: content-none.php:28
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+
+#: content-page.php:18 content-single.php:20 content.php:33
+msgid "Pages:"
+msgstr "Pages:"
+
+#: content-page.php:25 inc/template-tags.php:126
+msgid "Edit"
+msgstr "Edit"
+
+#: content.php:25
+#, php-format
+msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
+
+#: header.php:21
+msgid "Skip to content"
+msgstr "Skip to content"
+
+#: inc/class-ornea-setup.php:57
+msgid "Offcanvas - Left"
+msgstr "Offcanvas - Left"
+
+#: inc/class-ornea-setup.php:58
+msgid "Horizontal Menu (scrolling)"
+msgstr "Horizontal Menu (scrolling)"
+
+#: inc/class-ornea-setup.php:101
+msgid "Sidebar"
+msgstr "Sidebar"
+
+#: inc/class-ornea-setup.php:111 inc/class-ornea-setup.php:113
+msgid "Offcanvas - Right"
+msgstr "Offcanvas - Right"
+
+#: inc/class-ornea-setup.php:121
+msgid "Footer 1"
+msgstr "Footer 1"
+
+#: inc/class-ornea-setup.php:131
+msgid "Footer 2"
+msgstr "Footer 2"
+
+#: inc/class-ornea-setup.php:141
+msgid "Footer 3"
+msgstr "Footer 3"
+
+#: inc/class-ornea-setup.php:151
+msgid "Footer 4"
+msgstr "Footer 4"
+
+#: inc/customizer/config.php:18 inc/kirki/includes/class-kirki-toolkit.php:52
+msgid "Background Color"
+msgstr "Background Color"
+
+#: inc/customizer/config.php:19 inc/kirki/includes/class-kirki-toolkit.php:53
+msgid "Background Image"
+msgstr "Background Image"
+
+#: inc/customizer/config.php:20 inc/kirki/includes/class-kirki-toolkit.php:54
+msgid "No Repeat"
+msgstr "No Repeat"
+
+#: inc/customizer/config.php:21 inc/kirki/includes/class-kirki-toolkit.php:55
+msgid "Repeat All"
+msgstr "Repeat All"
+
+#: inc/customizer/config.php:22 inc/kirki/includes/class-kirki-toolkit.php:56
+msgid "Repeat Horizontally"
+msgstr "Repeat Horizontally"
+
+#: inc/customizer/config.php:23 inc/kirki/includes/class-kirki-toolkit.php:57
+msgid "Repeat Vertically"
+msgstr "Repeat Vertically"
+
+#: inc/customizer/config.php:24 inc/kirki/includes/class-kirki-toolkit.php:58
+msgid "Inherit"
+msgstr "Inherit"
+
+#: inc/customizer/config.php:25 inc/kirki/includes/class-kirki-toolkit.php:59
+msgid "Background Repeat"
+msgstr "Background Repeat"
+
+#: inc/customizer/config.php:26 inc/kirki/includes/class-kirki-toolkit.php:60
+msgid "Cover"
+msgstr "Cover"
+
+#: inc/customizer/config.php:27 inc/kirki/includes/class-kirki-toolkit.php:61
+msgid "Contain"
+msgstr "Contain"
+
+#: inc/customizer/config.php:28 inc/kirki/includes/class-kirki-toolkit.php:62
+msgid "Background Size"
+msgstr "Background Size"
+
+#: inc/customizer/config.php:29 inc/kirki/includes/class-kirki-toolkit.php:63
+msgid "Fixed"
+msgstr "Fixed"
+
+#: inc/customizer/config.php:30 inc/kirki/includes/class-kirki-toolkit.php:64
+msgid "Scroll"
+msgstr "Scroll"
+
+#: inc/customizer/config.php:31 inc/kirki/includes/class-kirki-toolkit.php:65
+msgid "Background Attachment"
+msgstr "Background Attachment"
+
+#: inc/customizer/config.php:32 inc/kirki/includes/class-kirki-toolkit.php:66
+msgid "Left Top"
+msgstr "Left Top"
+
+#: inc/customizer/config.php:33 inc/kirki/includes/class-kirki-toolkit.php:67
+msgid "Left Center"
+msgstr "Left Center"
+
+#: inc/customizer/config.php:34 inc/kirki/includes/class-kirki-toolkit.php:68
+msgid "Left Bottom"
+msgstr "Left Bottom"
+
+#: inc/customizer/config.php:35 inc/kirki/includes/class-kirki-toolkit.php:69
+msgid "Right Top"
+msgstr "Right Top"
+
+#: inc/customizer/config.php:36 inc/kirki/includes/class-kirki-toolkit.php:70
+msgid "Right Center"
+msgstr "Right Center"
+
+#: inc/customizer/config.php:37 inc/kirki/includes/class-kirki-toolkit.php:71
+msgid "Right Bottom"
+msgstr "Right Bottom"
+
+#: inc/customizer/config.php:38 inc/kirki/includes/class-kirki-toolkit.php:72
+msgid "Center Top"
+msgstr "Center Top"
+
+#: inc/customizer/config.php:39 inc/kirki/includes/class-kirki-toolkit.php:73
+msgid "Center Center"
+msgstr "Center Center"
+
+#: inc/customizer/config.php:40 inc/kirki/includes/class-kirki-toolkit.php:74
+msgid "Center Bottom"
+msgstr "Center Bottom"
+
+#: inc/customizer/config.php:41 inc/kirki/includes/class-kirki-toolkit.php:75
+msgid "Background Position"
+msgstr "Background Position"
+
+#: inc/customizer/config.php:42 inc/kirki/includes/class-kirki-toolkit.php:76
+msgid "Background Opacity"
+msgstr "Background Opacity"
+
+#: inc/customizer/config.php:43 inc/kirki/includes/class-kirki-toolkit.php:77
+msgid "ON"
+msgstr "ON"
+
+#: inc/customizer/config.php:44 inc/kirki/includes/class-kirki-toolkit.php:78
+msgid "OFF"
+msgstr "OFF"
+
+#: inc/customizer/config.php:45 inc/kirki/includes/class-kirki-toolkit.php:79
+msgid "All"
+msgstr "All"
+
+#: inc/customizer/config.php:46 inc/kirki/includes/class-kirki-toolkit.php:80
+msgid "Cyrillic"
+msgstr "Cyrillic"
+
+#: inc/customizer/config.php:47 inc/kirki/includes/class-kirki-toolkit.php:81
+msgid "Cyrillic Extended"
+msgstr "Cyrillic Extended"
+
+#: inc/customizer/config.php:48 inc/kirki/includes/class-kirki-toolkit.php:82
+msgid "Devanagari"
+msgstr "Devanagari"
+
+#: inc/customizer/config.php:49 inc/kirki/includes/class-kirki-toolkit.php:83
+msgid "Greek"
+msgstr "Greek"
+
+#: inc/customizer/config.php:50 inc/kirki/includes/class-kirki-toolkit.php:84
+msgid "Greek Extended"
+msgstr "Greek Extended"
+
+#: inc/customizer/config.php:51 inc/kirki/includes/class-kirki-toolkit.php:85
+msgid "Khmer"
+msgstr "Khmer"
+
+#: inc/customizer/config.php:52 inc/kirki/includes/class-kirki-toolkit.php:86
+msgid "Latin"
+msgstr "Latin"
+
+#: inc/customizer/config.php:53 inc/kirki/includes/class-kirki-toolkit.php:87
+msgid "Latin Extended"
+msgstr "Latin Extended"
+
+#: inc/customizer/config.php:54 inc/kirki/includes/class-kirki-toolkit.php:88
+msgid "Vietnamese"
+msgstr "Vietnamese"
+
+#: inc/customizer/config.php:55 inc/kirki/includes/class-kirki-toolkit.php:89
+msgctxt "font style"
+msgid "Serif"
+msgstr "Serif"
+
+#: inc/customizer/config.php:56 inc/kirki/includes/class-kirki-toolkit.php:90
+msgctxt "font style"
+msgid "Sans Serif"
+msgstr "Sans Serif"
+
+#: inc/customizer/config.php:57 inc/kirki/includes/class-kirki-toolkit.php:91
+msgctxt "font style"
+msgid "Monospace"
+msgstr "Monospace"
+
+#: inc/customizer/fields.php:11 inc/customizer/fields.php:28
+#: inc/customizer/fields.php:44 inc/customizer/fields.php:60
+msgid "Background"
+msgstr "Background"
+
+#: inc/customizer/fields.php:79
+msgid "Responsive Text"
+msgstr "Responsive Text"
+
+#: inc/customizer/fields.php:87 inc/customizer/fields.php:153
+#: inc/customizer/fields.php:185
+msgid "Font Family"
+msgstr "Font Family"
+
+#: inc/customizer/fields.php:101
+msgid "Google-Font subsets"
+msgstr "Google-Font subsets"
+
+#: inc/customizer/fields.php:102
+msgid "The subsets used from Google's API."
+msgstr "The subsets used from Google's API."
+
+#: inc/customizer/fields.php:116 inc/customizer/fields.php:167
+#: inc/customizer/fields.php:199
+msgid "Font Weight"
+msgstr "Font Weight"
+
+#: inc/customizer/fields.php:134
+msgid "Font Size"
+msgstr "Font Size"
+
+#: inc/customizer/fields.php:217
+msgid "Sidebar Width"
+msgstr "Sidebar Width"
+
+#: inc/customizer/fields.php:218
+msgid ""
+"number of columns on a 12-column grid. <strong>Set to 0 to disable the "
+"sidebar</strong>"
+msgstr ""
+"number of columns on a 12-column grid. <strong>Set to 0 to disable the "
+"sidebar</strong>"
+
+#: inc/customizer/fields.php:232
+msgid "Sidebar Position"
+msgstr "Sidebar Position"
+
+#: inc/customizer/fields.php:237
+msgid "Left"
+msgstr "Left"
+
+#: inc/customizer/fields.php:238
+msgid "Right"
+msgstr "Right"
+
+#: inc/customizer/fields.php:247
+msgid ""
+"You are using the WooCommerce plugin but don't have \"<strong><a target="
+"\"_blank\" style=\"color:#c00;\" href=\"https://wordpress.org/plugins/"
+"woocommerce-colors/\">WooCommerce Colors</a></strong>\" installed. Please "
+"install this plugin for additional color options."
+msgstr ""
+"You are using the WooCommerce plugin but don't have \"<strong><a target="
+"\"_blank\" style=\"color:#c00;\" href=\"https://wordpress.org/plugins/"
+"woocommerce-colors/\">WooCommerce Colors</a></strong>\" installed. Please "
+"install this plugin for additional color options."
+
+#: inc/customizer/fields.php:255
+msgid "Accent Color"
+msgstr "Accent Color"
+
+#: inc/customizer/fields.php:258
+msgid "Used for search and comment form buttons."
+msgstr "Used for search and comment form buttons."
+
+#: inc/customizer/fields.php:265
+msgid "Text Color"
+msgstr "Text Color"
+
+#: inc/customizer/fields.php:273
+msgid ""
+"Change the color of the main text on your site. Please note you should "
+"choose a color with enough contrast to your background, so that it's  easy "
+"to read. You should also avoid using colourful text and instead prefer using "
+"dark grey or white depending on the background color of your site."
+msgstr ""
+"Change the color of the main text on your site. Please note you should "
+"choose a color with enough contrast to your background, so that it's  easy "
+"to read. You should also avoid using colourful text and instead prefer using "
+"dark grey or white depending on the background color of your site."
+
+#: inc/customizer/fields.php:279
+msgid "Links Color"
+msgstr "Links Color"
+
+#: inc/customizer/fields.php:287
+msgid "The color for your links"
+msgstr "The color for your links"
+
+#: inc/customizer/fields.php:293
+msgid "Links - Hover Color"
+msgstr "Links - Hover Color"
+
+#: inc/customizer/fields.php:301
+msgid ""
+"The color for your links when a user hovers them. Traditionally this is "
+"something close to the normal links color but a different shade, enough for "
+"contrast."
+msgstr ""
+"The color for your links when a user hovers them. Traditionally this is "
+"something close to the normal links color but a different shade, enough for "
+"contrast."
+
+#: inc/customizer/fields.php:307
+msgid "Links - Visited Color"
+msgstr "Links - Visited Color"
+
+#: inc/customizer/fields.php:315
+msgid ""
+"The color for your visited links. Traditionally this should be the same as "
+"the main links color, though you can choose whatever you want."
+msgstr ""
+"The color for your visited links. Traditionally this should be the same as "
+"the main links color, though you can choose whatever you want."
+
+#: inc/customizer/fields.php:322
+msgid "Product Category Image Height"
+msgstr "Product Category Image Height"
+
+#: inc/customizer/fields.php:323
+msgid ""
+"Specify the minimum height of the category image. (percentage of screen "
+"height). Set to 0 to disable."
+msgstr ""
+"Specify the minimum height of the category image. (percentage of screen "
+"height). Set to 0 to disable."
+
+#: inc/customizer/fields.php:343
+msgid "Blog Mode"
+msgstr "Blog Mode"
+
+#: inc/customizer/fields.php:348
+msgid "Excerpt"
+msgstr "Excerpt"
+
+#: inc/customizer/fields.php:349
+msgid "Full"
+msgstr "Full"
+
+#: inc/customizer/fields.php:356
+msgid "Single-Product Display Mode"
+msgstr "Single-Product Display Mode"
+
+#: inc/customizer/fields.php:361
+msgid "Big Image"
+msgstr "Big Image"
+
+#: inc/customizer/fields.php:362
+msgid "Default"
+msgstr "Default"
+
+#: inc/customizer/panels.php:8
+msgid "Backgrounds"
+msgstr "Backgrounds"
+
+#: inc/customizer/panels.php:9
+msgid "Set background options for site areas"
+msgstr "Set background options for site areas"
+
+#: inc/customizer/panels.php:14
+msgid "Typography"
+msgstr "Typography"
+
+#: inc/customizer/panels.php:15
+msgid "Typography Options"
+msgstr "Typography Options"
+
+#: inc/customizer/sections.php:7
+msgid "Header Background"
+msgstr "Header Background"
+
+#: inc/customizer/sections.php:10
+msgid ""
+"You can edit the header background here. You can add a background color, a "
+"background image, and edit the position of that background image as well as "
+"its size. If you don't add an image and only use a background color, then "
+"the \"opacity\" setting will be applied to the background color. If you add "
+"a background image however, that setting will also apply to the whole header "
+"when the page scrolls down."
+msgstr ""
+"You can edit the header background here. You can add a background color, a "
+"background image, and edit the position of that background image as well as "
+"its size. If you don't add an image and only use a background color, then "
+"the \"opacity\" setting will be applied to the background color. If you add "
+"a background image however, that setting will also apply to the whole header "
+"when the page scrolls down."
+
+#: inc/customizer/sections.php:14
+msgid "Offcanvas Menu Background"
+msgstr "Offcanvas Menu Background"
+
+#: inc/customizer/sections.php:17
+msgid ""
+"You can edit the background for the left, offcanvas menu here. You can add a "
+"background color, a background image, and edit the position of that "
+"background image as well as its size. This area inherits the \"opacity\" "
+"setting from the header background. Please note that this will only become "
+"visible once you assign a menu to the \"Offcanvas - Left\" menu area."
+msgstr ""
+"You can edit the background for the left, offcanvas menu here. You can add a "
+"background color, a background image, and edit the position of that "
+"background image as well as its size. This area inherits the \"opacity\" "
+"setting from the header background. Please note that this will only become "
+"visible once you assign a menu to the \"Offcanvas - Left\" menu area."
+
+#: inc/customizer/sections.php:21
+msgid "Offcanvas Sidebar Background"
+msgstr "Offcanvas Sidebar Background"
+
+#: inc/customizer/sections.php:24
+msgid ""
+"You can edit the background for the right, offcanvas sidebar here. You can "
+"add a background color, a background image, and edit the position of that "
+"background image as well as its size."
+msgstr ""
+"You can edit the background for the right, offcanvas sidebar here. You can "
+"add a background color, a background image, and edit the position of that "
+"background image as well as its size."
+
+#: inc/customizer/sections.php:28
+msgid "Base"
+msgstr "Base"
+
+#: inc/customizer/sections.php:31
+msgid ""
+"The \"Base\" typography section will change the font for your text body. The "
+"font-size you set here will also affect the font-size af all other elements "
+"(such as post titles etc). The \"Responsive Text\" setting when enabled will "
+"automatically change the font-size depending on the user's  screen. The font-"
+"size you specify here will be used for mobiles, and larger screens will use "
+"larger font sizes so please note that when you change this setting you may "
+"have to adjust your base font-size."
+msgstr ""
+"The \"Base\" typography section will change the font for your text body. The "
+"font-size you set here will also affect the font-size af all other elements "
+"(such as post titles etc). The \"Responsive Text\" setting when enabled will "
+"automatically change the font-size depending on the user's  screen. The font-"
+"size you specify here will be used for mobiles, and larger screens will use "
+"larger font sizes so please note that when you change this setting you may "
+"have to adjust your base font-size."
+
+#: inc/customizer/sections.php:35
+msgid "Headers"
+msgstr "Headers"
+
+#: inc/customizer/sections.php:38
+msgid ""
+"You can change the font-family and font-weight of all headers in this "
+"section."
+msgstr ""
+"You can change the font-family and font-weight of all headers in this "
+"section."
+
+#: inc/customizer/sections.php:42
+msgid "Site Name"
+msgstr "Site Name"
+
+#: inc/customizer/sections.php:45
+msgid ""
+"If you don\\t use a logo for your site the the sitename will be displayed on "
+"your header. You can change the font-family and font-weight that will be "
+"used here."
+msgstr ""
+"If you don\\t use a logo for your site the the sitename will be displayed on "
+"your header. You can change the font-family and font-weight that will be "
+"used here."
+
+#: inc/customizer/sections.php:49
+msgid "Layout"
+msgstr "Layout"
+
+#: inc/customizer/sections.php:54
+msgid "Footer Wrapper Background"
+msgstr "Footer Wrapper Background"
+
+#: inc/customizer/sections.php:60
+msgid "Extras"
+msgstr "Extras"
+
+#: inc/customizer/sections.php:65
+msgid "Navigation"
+msgstr "Navigation"
+
+#: inc/customizer/sections.php:67
+msgid ""
+"Select your menus below. The Offcanvas-left menu is vertical and will only "
+"show when the user clicks on the humbucker icon on the header. The "
+"Horizontal menu will always show and will be scrollable to facilitate mobile "
+"navigation. Both menus are non-hierarchical."
+msgstr ""
+"Select your menus below. The Offcanvas-left menu is vertical and will only "
+"show when the user clicks on the humbucker icon on the header. The "
+"Horizontal menu will always show and will be scrollable to facilitate mobile "
+"navigation. Both menus are non-hierarchical."
+
+#: inc/extras.php:60
+#, php-format
+msgid "Page %s"
+msgstr "Page %s"
+
+#: inc/site-logo/inc/class-site-logo-control.php:19
+msgid "Add logo"
+msgstr "Add logo"
+
+#: inc/site-logo/inc/class-site-logo-control.php:20
+msgid "Set as logo"
+msgstr "Set as logo"
+
+#: inc/site-logo/inc/class-site-logo-control.php:21
+msgid "Choose logo"
+msgstr "Choose logo"
+
+#: inc/site-logo/inc/class-site-logo-control.php:22
+msgid "Change logo"
+msgstr "Change logo"
+
+#: inc/site-logo/inc/class-site-logo-control.php:23
+msgid "Remove logo"
+msgstr "Remove logo"
+
+#: inc/site-logo/inc/class-site-logo-control.php:24
+msgid "No logo set"
+msgstr "No logo set"
+
+#: inc/site-logo/inc/class-site-logo.php:78
+msgid "Site Title, Tagline, and Logo"
+msgstr "Site Title, Tagline, and Logo"
+
+#: inc/site-logo/inc/class-site-logo.php:89
+msgid "Display Header Text"
+msgstr "Display Header Text"
+
+#: inc/site-logo/inc/class-site-logo.php:111
+msgid "Logo"
+msgstr "Logo"
+
+#: inc/site-logo/inc/class-site-logo.php:251
+msgid "Site Logo"
+msgstr "Site Logo"
+
+#: inc/template-tags.php:23
+msgid "Posts navigation"
+msgstr "Posts navigation"
+
+#: inc/template-tags.php:27
+msgid "Older posts"
+msgstr "Older posts"
+
+#: inc/template-tags.php:31
+msgid "Newer posts"
+msgstr "Newer posts"
+
+#: inc/template-tags.php:56
+msgid "Post navigation"
+msgstr "Post navigation"
+
+#: inc/template-tags.php:86
+#, php-format
+msgctxt "post date"
+msgid "Posted on %s"
+msgstr "Posted on %s"
+
+#: inc/template-tags.php:91
+#, php-format
+msgctxt "post author"
+msgid "by %s"
+msgstr "by %s"
+
+#. translators: used between list items, there is a space after the comma
+#: inc/template-tags.php:108 inc/template-tags.php:114
+msgid ", "
+msgstr ", "
+
+#: inc/template-tags.php:110
+#, php-format
+msgid "Posted in %1$s"
+msgstr "Posted in %1$s"
+
+#: inc/template-tags.php:116
+#, php-format
+msgid "Tagged %1$s"
+msgstr "Tagged %1$s"
+
+#: inc/template-tags.php:122
+msgid "Leave a comment"
+msgstr "Leave a comment"
+
+#: inc/template-tags.php:122
+msgid "1 Comment"
+msgstr "1 Comment"
+
+#: inc/template-tags.php:122
+msgid "% Comments"
+msgstr "% Comments"
+
+#: inc/template-tags.php:143
+#, php-format
+msgid "Category: %s"
+msgstr "Category: %s"
+
+#: inc/template-tags.php:145
+#, php-format
+msgid "Tag: %s"
+msgstr "Tag: %s"
+
+#: inc/template-tags.php:147
+#, php-format
+msgid "Author: %s"
+msgstr "Author: %s"
+
+#: inc/template-tags.php:149
+#, php-format
+msgid "Year: %s"
+msgstr "Year: %s"
+
+#: inc/template-tags.php:149
+msgctxt "yearly archives date format"
+msgid "Y"
+msgstr "Y"
+
+#: inc/template-tags.php:151
+#, php-format
+msgid "Month: %s"
+msgstr "Month: %s"
+
+#: inc/template-tags.php:151
+msgctxt "monthly archives date format"
+msgid "F Y"
+msgstr "F Y"
+
+#: inc/template-tags.php:153
+#, php-format
+msgid "Day: %s"
+msgstr "Day: %s"
+
+#: inc/template-tags.php:153
+msgctxt "daily archives date format"
+msgid "F j, Y"
+msgstr "F j, Y"
+
+#: inc/template-tags.php:156
+msgctxt "post format archive title"
+msgid "Asides"
+msgstr "Asides"
+
+#: inc/template-tags.php:158
+msgctxt "post format archive title"
+msgid "Galleries"
+msgstr "Galleries"
+
+#: inc/template-tags.php:160
+msgctxt "post format archive title"
+msgid "Images"
+msgstr "Images"
+
+#: inc/template-tags.php:162
+msgctxt "post format archive title"
+msgid "Videos"
+msgstr "Videos"
+
+#: inc/template-tags.php:164
+msgctxt "post format archive title"
+msgid "Quotes"
+msgstr "Quotes"
+
+#: inc/template-tags.php:166
+msgctxt "post format archive title"
+msgid "Links"
+msgstr "Links"
+
+#: inc/template-tags.php:168
+msgctxt "post format archive title"
+msgid "Statuses"
+msgstr "Statuses"
+
+#: inc/template-tags.php:170
+msgctxt "post format archive title"
+msgid "Audio"
+msgstr "Audio"
+
+#: inc/template-tags.php:172
+msgctxt "post format archive title"
+msgid "Chats"
+msgstr "Chats"
+
+#: inc/template-tags.php:175
+#, php-format
+msgid "Archives: %s"
+msgstr "Archives: %s"
+
+#. translators: 1: Taxonomy singular name, 2: Current taxonomy term
+#: inc/template-tags.php:179
+#, php-format
+msgid "%1$s: %2$s"
+msgstr "%1$s: %2$s"
+
+#: inc/template-tags.php:181
+msgid "Archives"
+msgstr "Archives"
+
+#: search.php:16
+#, php-format
+msgid "Search Results for: %s"
+msgstr "Search Results for: %s"
+
+#: searchform.php:2
+msgid "Search for:"
+msgstr "Search for:"
+
+#: searchform.php:3
+msgid "Search"
+msgstr "Search"
+
+#: woocommerce/single-product/product-image.php:47
+msgid "Placeholder"
+msgstr "Placeholder"
+
+#. Theme Name of the plugin/theme
+msgid "Ornea"
+msgstr "Ornea"
+
+#. Description of the plugin/theme
+msgid "A minimalistic WordPress theme for WooCommerce"
+msgstr "A minimalistic WordPress theme for WooCommerce"
+
+#. Author of the plugin/theme
+msgid "Aristeides Stathopoulos"
+msgstr "Aristeides Stathopoulos"
+
+#. Author URI of the plugin/theme
+msgid "http://aristeides.com"
+msgstr "http://aristeides.com"

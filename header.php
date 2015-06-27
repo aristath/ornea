@@ -57,10 +57,7 @@
 			</div>
 			<div class="header-search-wrapper">
 				<div class="search-wrapper">
-					<form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
-						<label class="screen-reader-text"><?php _e( 'Search for:', 'ornea' ); ?></label>
-						<input id="header-search"type="search" value="<?php echo get_search_query(); ?>" name="s" class="search-field" placeholder="<?php _e( 'Search', 'sage' ); ?> <?php bloginfo( 'name' ); ?>" required>
-					</form>
+					<?php get_search_form(); ?>
 				</div>
 			</div>
 			<?php if ( has_nav_menu( 'horizontal' ) ) : ?>
