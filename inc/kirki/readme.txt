@@ -1,94 +1,172 @@
 === Kirki ===
-Contributors: aristath, fovoc
-Tags: customizer, options framework, theme, mods, toolkit
+Contributors: aristath, fovoc, igmoweb
+Tags: customizer,options framework, theme, mods, toolkit
 Donate link: http://kirki.org/
 Requires at least: 4.0
-Tested up to: 4.2
-Stable tag: 0.8.4
+Tested up to: 4.3
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Tired of all the bloated options frameworks? You can use the WordPress Customizer instead, and extend it using Kirki!
+The ultimate toolkit for theme developers using the WordPress Customizer
 
 
 == Description ==
-Kirki allows developers to add advanced controls to their customizer as well as customize the way the customizer looks and feels.
 
-You can add beautiful options to your theme\'s customizer panel and allow your users to tweak any aspect of their theme. You\'ve got 18 control types that you can use ( 9 default + 9 custom-made ), styling options for the customizer, as well as automatic calculations for your styles using the `output` argument on your controls.
+Kirki is not a framework. It's a Toolkit allowing WordPress developers to use the Customizer and take advantage of its advanced features and flexibility by abstracting the code and making it easier for everyone to create beautiful and meaningful user experiences.
 
-Converting from the default customizer to the syntax used by Kirki will only take a few minutes and will save you a lot of time in the long run. :)
+It does not replace the WordPress Customizer API, you can still use the default WordPress methods and we advise you to familiarize yourselves with them.
+An excellent handbook for the WordPress Customizer can be found on the [developer.wordpress.org](https://developer.wordpress.org/themes/advanced-topics/customizer-api/) website.
 
-**CAUTION**: This plugin requires PHP 5.3 and is not compatible with PHP 5.2
+What Kirki does is save you time... LOTS of time!
 
-The following controls are included:
+**Configurations**
 
-* Radio-Buttonset
-* Radio-Image
-* Radio
-* Checkbox
-* Color
-* Color-Alpha
-* Dropdown Pages
-* Image
-* Background
-* Multicheck
-* Select
-* Slider
-* Text
-* Textarea
-* Upload
-* Switch
-* Toggle
-* Sortable
-* Number
-* Palette
-* Editor (TinyMCE)
-* Select2
+Add your own Kirki configuration so that all the fields you create using Kirki inherit the configuration's properties.
+More information on configurations can be found on our [Wiki](https://github.com/aristath/kirki/wiki/Configuration).
 
-For documentation and examples on how to use these controls, please visit the [Kirki Wiki on Github](https://github.com/aristath/kirki/wiki).
+**Add Panels**
 
+Want to use Kirki to add your panels? Please look at the documentation on our [Wiki](https://github.com/aristath/kirki/wiki/Panels)
+
+**Add Sections**
+
+Want to use Kirki to add your sections? Please look at the documentation on our [Wiki](https://github.com/aristath/kirki/wiki/Sections)
+
+**Add Fields**
+
+Kirki allows you to create your fields easily and without any issues.
+There are 3 syntaxes you can use to do that, depending on your preferences and the project at hand. More info about how to add fields can be found on the [Wiki](https://github.com/aristath/kirki/wiki/Fields)
+
+**Automatic CSS calculations**
+
+Most of the options we create for our themes take care of CSS. We make that easy for you so you no longer have to write any custom PHP functions to create your CSS!
+All you have to do is use the `output` argument inside your fields and everything else is taken care of. More information on that can be found on our [Wiki page for the output argument](https://github.com/aristath/kirki/wiki/output)
+
+**Automatic JS generation for postMessage**
+
+If you want to use postMessage we've got you covered... Chances are you won't need to write your custom JS, we can auto-generate that for you if you use the `js_vars` argument in your fields. More info on that can be found on our [Wiki page for the js_vars argument](https://github.com/aristath/kirki/wiki/js_vars)
+
+**Style the customizer**
+
+Want to change colors? Perhaps the width of the customizer panel? What about adding a custom logo & description?
+No matter what you want we've got you covered.
+Go ahead and take a look at [styling the customizer](https://github.com/aristath/kirki/wiki/Styling-the-Customizer)
+
+**Google Fonts Integration**
+
+Kirki also integrates with Google Fonts, allowing you to use ALL google fonts and their variants in your themes. We take care of all the calculations for you, all you have to do is add your fields and let us handle the rest. Take a look at the [Google Fonts Integration](https://github.com/aristath/kirki/wiki/Google-Fonts-Integration) page for an example and instructions.
+
+**Add tooltips to your fields**
+
+Sometimes we need to add more info for our users... We've included a popup where you can add your help text using the `help` argument.
+
+**Extended Documentation**
+
+For documentation and examples on how to use the plugin please visit the [Kirki Wiki on Github](https://github.com/aristath/kirki/wiki).
+Feel free to improve them! :)
+
+**Available Control types:**
+
+* checkbox
+* color-alpha
+* color
+* custom
+* dropdown-pages
+* editor
+* image
+* multicheck
+* number
+* palette
+* radio-buttonset
+* radio-image
+* radio
+* select
+* select2
+* select2-multiple
+* slider
+* sortable
+* switch
+* text
+* textarea
+* toggle
+
+All development is done on github on https://github.com/aristath/kirki
+
+If you wish to donate you can do so on http://kirki.org
 
 == Installation ==
 
 **Method 1: Use as a plugin**
+
 From your dashboard go to Plugins => Add New.
 Search for "Kirki" and install it.
 Once you install it, activate it.
 For configuration instructions please visit the [Kirki Wiki on Github](https://github.com/aristath/kirki/wiki).
 
 **Method 2: Embed in your theme**
+
 Please visit https://github.com/aristath/kirki/wiki/Embedding-in-a-theme for documentation and instructions.
 
 == Sample Theme ==
 
-To get an idea on how to include Kirki in your next project, a [sample theme](https://github.com/aristath/kirki/wiki/Sample-Theme-with-Kirki) has been created.
+To get an idea on how to include Kirki in your next project, you can take a look at the [Ornea theme](https://github.com/aristath/ornea).
 
 == Changelog ==
 
-= 1.0.0-beta1 =
+= 1.0.2 =
 
+July 17, 2014, dev time: 5 minutes
+
+* NEW: Added 'disable_output' and 'disable_google_fonts' arguments to the configuration.
+
+= 1.0.1 =
+
+July 17, 2014, dev time: 1 hour
+
+* FIX: Issues when using serialized options instead of theme_mods or individual options.
+* FIX: Issues with the `output` argument on fields.
+* FIX: Other minor bugfixes
+
+= 1.0.0 =
+
+July 11, 2014, dev time: 177 hours
+
+* NEW: Added PHPUnit tests
+* NEW: Use wp_add_inline_style to add customizer styles
+* NEW: Rebuilt the background fields calculation
+* NEW: Now using Formstone for switches & toggles
 * NEW: Added a new API. See https://github.com/aristath/kirki/wiki for documentation.
 * NEW: Minimum PHP requirement is now PHP 5.2
 * NEW: Added a Select2 field type.
 * NEW: Introducing the Kirki::get_option() method to get values.
-* NEW: added 'prefix' and 'suffix' arguments to output. See https://github.com/aristath/kirki/issues/200#issuecomment-95994419
-* NEW: Added ability to get variables for CSS preprocessors from the customizer values
-* NEW: $units to all outputs to support '!important'
+* NEW: added 'media_query' argument to output.
+* NEW: Added ability to get variables for CSS preprocessors from the customizer values. See https://github.com/aristath/kirki/wiki/variables for documentation
+* NEW: now supporting 'units' to all outputs to support '!important'
 * NEW: Ability to create panels & sections using the new API.
 * NEW: added a get_posts method to the Kirki class.
 * NEW: Implement width argument in the styling options. See https://github.com/aristath/kirki/wiki/Styling-the-Customizer
-* NEW: add kirki/control_types filter
-* FIX: avoid errors when Color is undefined
+* NEW: add 'kirki/control_types' filter
+* FIX: Properly saving values in the db when using serialized options
+* FIX: Check if classes & functions exist before adding them (allows for better compatibility when embedded in a theme)
+* FIX: PHP Warnings & Notices
+* FIX: Other minor bugfixes
+* FIX: Now using consistently `option_type` instead of `options_type` everywhere
+* FIX: `Kirki::get_option()` method now works for all fields, including background fields.
+* FIX: avoid errors when Color is undefined in background fields
 * FIX: Use WP_Filesystem to get the google fonts array from a json file
 * FIX: Radio-Button styling
 * FIX: PHP Notices
 * FIX: Typos
-* FIX: Properly sanitising rgba colors
+* FIX: Properly sanitizing rgba colors
 * FIX: Properly sanitize numbers
 * FIX: Make sure all variables are escaped on output
-* TWEAK: allow using serialized options.
+* TWEAK: Simplify the Colourlovers integration.
+* TWEAK: Improve sanitization
+* TWEAK: Improve the Kirki_Styles_Customizer class
+* TWEAK: Code cleanups
+* TWEAK: Added more inline docs (lots of them)
 * TWEAK: Use active_callback for required arguments instead of custom JS
-* TWEAK: Adding some more inline docs
 * TWEAK: Updated translation files
 * TWEAK: Better color manipulation in the Kirki_Color class
 * TWEAK: Move secondary classes instantiation to the Kirki() function.

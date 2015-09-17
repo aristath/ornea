@@ -5,7 +5,7 @@
  * Description:   The ultimate WordPress Customizer Toolkit
  * Author:        Aristeides Stathopoulos
  * Author URI:    http://aristeides.com
- * Version:       1.0.0-beta1
+ * Version:       1.0.2
  * Text Domain:   kirki
  *
  *
@@ -40,12 +40,24 @@ if ( ! function_exists( 'kirki_autoload_classes' ) ) {
 
 		if ( 0 === stripos( $class_name, 'Kirki' ) ) {
 
+			// Autoload Controls
 			$foldername = ( 0 === stripos( $class_name, 'Kirki_Controls_' ) ) ? 'controls'.DIRECTORY_SEPARATOR.strtolower( str_replace( '_', '-', str_replace( '_Control', '', str_replace( 'Kirki_Controls_', '', $class_name ) ) ) ) : '';
 			$foldername = ( '' != $foldername ) ? $foldername.DIRECTORY_SEPARATOR : '';
 
 			$class_path = KIRKI_PATH.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.$foldername.'class-'.strtolower( str_replace( '_', '-', $class_name ) ).'.php';
 			if ( file_exists( $class_path ) ) {
 				include $class_path;
+				return;
+			}
+
+			// Autoload Settings
+			$foldername = ( 0 === stripos( $class_name, 'Kirki_Settings_' ) ) ? 'settings'.DIRECTORY_SEPARATOR.strtolower( str_replace( '_', '-', str_replace( '_Setting', '', str_replace( 'Kirki_Settings_', '', $class_name ) ) ) ) : '';
+			$foldername = ( '' != $foldername ) ? $foldername.DIRECTORY_SEPARATOR : '';
+
+			$class_path = KIRKI_PATH.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.$foldername.'class-'.strtolower( str_replace( '_', '-', $class_name ) ).'.php';
+			if ( file_exists( $class_path ) ) {
+				include $class_path;
+				return;
 			}
 
 		}
@@ -70,13 +82,12 @@ if ( ! function_exists( 'Kirki' ) ) {
 		$kirki = Kirki_Toolkit::get_instance();
 
 		$kirki->font_registry = new Kirki_Fonts_Font_Registry();
-		$kirki->scripts       = new Kirki_Scripts_Registry();
 		$kirki->api           = new Kirki();
+		$kirki->scripts       = new Kirki_Scripts_Registry();
 		$kirki->styles        = array(
-			'back'            => new Kirki_Styles_Customizer(),
-			'front'           => new Kirki_Styles_Frontend(),
+			'back'  => new Kirki_Styles_Customizer(),
+			'front' => new Kirki_Styles_Frontend(),
 		);
-
 
 		return $kirki;
 
@@ -125,4 +136,4 @@ Kirki::add_config( '' );
  * You can uncomment whichever you want and fields will flood the customizer.
  */
 // include_once( KIRKI_PATH . '/sample-config.php' );
-// include_once( KIRKI_PATH . '/kirki-user-tests.php' );
+// include_once( KIRKI_PATH . '/tests/kirki-user-tests.php' );

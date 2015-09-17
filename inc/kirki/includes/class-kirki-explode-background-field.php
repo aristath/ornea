@@ -6,7 +6,7 @@ class Kirki_Explode_Background_Field extends Kirki_Field {
 	 * Takes a single field with type = background and explodes it to multiple controls.
 	 *
 	 * @param array
-	 * @return null|array<Array>
+	 * @return null|array
 	 */
 	public static function explode( $field ) {
 		$i18n    = Kirki_Toolkit::i18n();
@@ -44,25 +44,49 @@ class Kirki_Explode_Background_Field extends Kirki_Field {
 
 			switch ( $key ) {
 				case 'color':
-					$type     = ( false !== strpos( $field['default']['color'], 'rgba' ) ) ? 'color-alpha' : 'color';
-					$type     = ( isset( $field['default']['opacity'] ) ) ? 'color-alpha' : $type;
+					/**
+					 * Use 'color-alpha' instead of 'color' if default is an rgba value
+					 * or if 'opacity' is set.
+					 */
+					$type = ( false !== strpos( $field['default']['color'], 'rgba' ) ) ? 'color-alpha' : 'color';
+					$type = ( isset( $field['default']['opacity'] ) ) ? 'color-alpha' : $type;
+					if ( isset( $field['default']['opacity'] ) && false === strpos( $value, 'rgb' ) ) {
+						$value = Kirki_Color::get_rgba( $value, $field['default']['opacity'] );
+					}
 					break;
 				case 'image':
-					$type     = 'image';
+					$type = 'image';
 					break;
 				case 'attach':
+					/**
+					 * Small hack so that background attachments properly work.
+					 */
 					$output_property = 'background-attachment';
 					$description     = $i18n['background-attachment'];
 					break;
 				default:
-					$help     = '';
+					$help = '';
 					break;
 			}
 
-			$fields[ $field['settings'].'_'.$setting ] = array_merge( $field, array(
+			/**
+			 * If we're using options & option_name is set, then we need to modify the setting.
+			 */
+			if ( ( isset( $field['option_type'] ) && 'option' == $field['option_type'] && isset( $field['option_name'] ) ) && ! empty( $field['option_name'] ) ) {
+				$property_setting = str_replace( ']', '', str_replace( $field['option_name'].'[', '', $field['settings'] ) );
+				$property_setting = esc_attr( $field['option_name'] ).'['.esc_attr( $property_setting ).'_'.$setting.']';
+			} else {
+				$property_setting = esc_attr( $field['settings'] ).'_'.$setting;
+			}
+
+			/**
+			 * Build the field.
+			 * We're merging with the original field here, so any extra properties are inherited.
+			 */
+			$fields[ $property_setting ] = array_merge( $field, array(
 				'type'        => $type,
 				'label'       => $label,
-				'settings'    => $field['settings'].'_'.$setting,
+				'settings'    => $property_setting,
 				'help'        => $help,
 				'section'     => $field['section'],
 				'priority'    => $field['priority'],
@@ -93,13 +117,19 @@ class Kirki_Explode_Background_Field extends Kirki_Field {
 	 * @return  array
 	 */
 	public static function process_fields( $fields ) {
+
 		foreach ( $fields as $field ) {
+			/**
+			 * Make sure background fields are exploded
+			 */
 			if ( isset( $field['type'] ) && 'background' == $field['type'] ) {
 				$explode = self::explode( $field );
 				$fields  = array_merge( $fields, $explode );
 			}
 		}
+
 		return $fields;
+
 	}
 
 

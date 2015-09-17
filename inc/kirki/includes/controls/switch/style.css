@@ -1,72 +1,76 @@
-.customize-control-switch .Switch,
-.customize-control-toggle .Switch {
+.customize-control-switch input[type="checkbox"] {
+  display: none; }
+.customize-control-switch .switch {
+  border: none;
+  margin-bottom: 1.5rem;
+  outline: 0;
+  padding: 0;
   position: relative;
-  display: inline-block;
-  font-size: 16px;
-  font-weight: bold;
-  color: #aaa;
-  height: 18px;
-  line-height: 27px;
-  padding: 6px;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  background: #f2f2f2;
-  cursor: pointer;
-  float: right;
-  transition: all 0.15s ease-in-out; }
-  .customize-control-switch .Switch .Toggle,
-  .customize-control-toggle .Switch .Toggle {
-    position: absolute;
-    top: 1px;
-    width: 37px;
-    height: 25px;
-    border: 1px solid #aaa;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    background: #fff;
-    z-index: 989;
-    transition: all 0.15s ease-in-out; }
-  .customize-control-switch .Switch .On,
-  .customize-control-switch .Switch .Off,
-  .customize-control-toggle .Switch .On,
-  .customize-control-toggle .Switch .Off {
-    display: inline-block;
-    width: 35px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+  .customize-control-switch .switch label {
+    background: rgba(0, 0, 0, 0.2);
+    color: transparent;
+    cursor: pointer;
+    display: block;
+    margin-bottom: 1rem;
     position: relative;
-    top: -5px; }
-  .customize-control-switch .Switch .On,
-  .customize-control-toggle .Switch .On {
-    color: #333; }
-  .customize-control-switch .Switch.On .Toggle,
-  .customize-control-toggle .Switch.On .Toggle {
-    left: 54%; }
-  .customize-control-switch .Switch.Off .Toggle,
-  .customize-control-toggle .Switch.Off .Toggle {
-    left: 2%; }
-  .customize-control-switch .Switch.Round,
-  .customize-control-toggle .Switch.Round {
-    padding: 0 20px;
-    border-radius: 40px;
-    margin-top: 5px; }
-    .customize-control-switch .Switch.Round .Toggle,
-    .customize-control-toggle .Switch.Round .Toggle {
-      border-radius: 40px;
-      width: 14px;
-      height: 14px; }
-    .customize-control-switch .Switch.Round.Off .Toggle,
-    .customize-control-toggle .Switch.Round.Off .Toggle {
-      left: 3%; }
-    .customize-control-switch .Switch.Round.On,
-    .customize-control-toggle .Switch.Round.On {
-      color: #fff;
-      background: #333; }
-      .customize-control-switch .Switch.Round.On .Toggle,
-      .customize-control-toggle .Switch.Round.On .Toggle {
-        left: 58%; }
-
-body.IE7 .Switch {
-  width: 78px; }
-
-body.IE7 .Switch.Round {
-  width: 1px; }
+    text-indent: 100%;
+    transition: left 0.15s ease-out;
+    height: 2rem;
+    width: 4rem; }
+    .customize-control-switch .switch label:after {
+      background: #FFFFFF;
+      content: "";
+      display: block;
+      height: 1.5rem;
+      left: .25rem;
+      position: absolute;
+      top: .25rem;
+      width: 1.5rem;
+      -webkit-transition: left 0.15s ease-out;
+      -moz-transition: left 0.15s ease-out;
+      -o-transition: translate3d(0, 0, 0);
+      transition: left 0.15s ease-out;
+      -webkit-transform: translate3d(0, 0, 0);
+      -moz-transform: translate3d(0, 0, 0);
+      -ms-transform: translate3d(0, 0, 0);
+      -o-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0); }
+  .customize-control-switch .switch input {
+    left: 10px;
+    opacity: 0;
+    padding: 0;
+    position: absolute;
+    top: 9px; }
+    .customize-control-switch .switch input + label {
+      margin-left: 0;
+      margin-right: 0; }
+    .customize-control-switch .switch input:checked + label {
+      background: #3498DB; }
+      .customize-control-switch .switch input:checked + label:after {
+        left: 2.25rem; }
+  .customize-control-switch .switch.round {
+    border-radius: 1000px; }
+    .customize-control-switch .switch.round label {
+      border-radius: 2rem; }
+      .customize-control-switch .switch.round label:after {
+        border-radius: 2rem; }
+.customize-control-switch .switch-on {
+  position: absolute;
+  left: -55px;
+  top: 8px;
+  color: white;
+  font-weight: bold;
+  font-size: 9px; }
+.customize-control-switch .switch-off {
+  position: absolute;
+  left: -25px;
+  top: 8px;
+  color: white;
+  font-weight: bold;
+  font-size: 9px; }
 
 /*# sourceMappingURL=style.css.map */

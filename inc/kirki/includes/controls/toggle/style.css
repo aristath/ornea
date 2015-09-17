@@ -1,72 +1,46 @@
-.customize-control-switch .Switch,
-.customize-control-toggle .Switch {
-  position: relative;
+.customize-control-toggle input[type="checkbox"] {
+  display: none; }
+.customize-control-toggle .switch {
   display: inline-block;
-  font-size: 16px;
-  font-weight: bold;
-  color: #aaa;
-  height: 18px;
-  line-height: 27px;
-  padding: 6px;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  background: #f2f2f2;
+  width: 40px;
+  height: 16px;
+  border-radius: 8px;
+  background: #ccc;
+  vertical-align: middle;
+  position: relative;
   cursor: pointer;
-  float: right;
-  transition: all 0.15s ease-in-out; }
-  .customize-control-switch .Switch .Toggle,
-  .customize-control-toggle .Switch .Toggle {
+  user-select: none;
+  transition: background 350ms ease; }
+  .customize-control-toggle .switch:before, .customize-control-toggle .switch:after {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
     position: absolute;
-    top: 1px;
-    width: 37px;
-    height: 25px;
-    border: 1px solid #aaa;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    background: #fff;
-    z-index: 989;
-    transition: all 0.15s ease-in-out; }
-  .customize-control-switch .Switch .On,
-  .customize-control-switch .Switch .Off,
-  .customize-control-toggle .Switch .On,
-  .customize-control-toggle .Switch .Off {
-    display: inline-block;
-    width: 35px;
-    position: relative;
-    top: -5px; }
-  .customize-control-switch .Switch .On,
-  .customize-control-toggle .Switch .On {
-    color: #333; }
-  .customize-control-switch .Switch.On .Toggle,
-  .customize-control-toggle .Switch.On .Toggle {
-    left: 54%; }
-  .customize-control-switch .Switch.Off .Toggle,
-  .customize-control-toggle .Switch.Off .Toggle {
-    left: 2%; }
-  .customize-control-switch .Switch.Round,
-  .customize-control-toggle .Switch.Round {
-    padding: 0 20px;
-    border-radius: 40px;
-    margin-top: 5px; }
-    .customize-control-switch .Switch.Round .Toggle,
-    .customize-control-toggle .Switch.Round .Toggle {
-      border-radius: 40px;
-      width: 14px;
-      height: 14px; }
-    .customize-control-switch .Switch.Round.Off .Toggle,
-    .customize-control-toggle .Switch.Round.Off .Toggle {
-      left: 3%; }
-    .customize-control-switch .Switch.Round.On,
-    .customize-control-toggle .Switch.Round.On {
-      color: #fff;
-      background: #333; }
-      .customize-control-switch .Switch.Round.On .Toggle,
-      .customize-control-toggle .Switch.Round.On .Toggle {
-        left: 58%; }
-
-body.IE7 .Switch {
-  width: 78px; }
-
-body.IE7 .Switch.Round {
-  width: 1px; }
+    top: 50%;
+    transition: all 350ms cubic-bezier(0, 0.95, 0.38, 0.98), background 150ms ease; }
+  .customize-control-toggle .switch:before {
+    background: rgba(0, 0, 0, 0.2);
+    transform: translate3d(0, -50%, 0) scale(0); }
+  .customize-control-toggle .switch:after {
+    background: rgba(100, 100, 100, 0.8);
+    transform: translate3d(0, -50%, 0); }
+  .customize-control-toggle .switch:active:before {
+    transform: translate3d(0, -50%, 0) scale(3); }
+.customize-control-toggle input:checked + .switch {
+  background: rgba(52, 152, 222, 0.3); }
+  .customize-control-toggle input:checked + .switch:before {
+    background: rgba(52, 152, 222, 0.075);
+    transform: translate3d(100%, -50%, 0) scale(1); }
+  .customize-control-toggle input:checked + .switch:after {
+    background: #3498DE;
+    transform: translate3d(100%, -50%, 0); }
+  .customize-control-toggle input:checked + .switch:active:before {
+    background: rgba(52, 152, 222, 0.075);
+    transform: translate3d(100%, -50%, 0) scale(3); }
+.customize-control-toggle .customize-control-title {
+  width: calc(100% - 50px);
+  float: left; }
 
 /*# sourceMappingURL=style.css.map */

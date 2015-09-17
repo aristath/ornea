@@ -74,7 +74,7 @@ Kirki::add_field( 'ornea', array(
 
 Kirki::add_field( 'ornea', array(
 	'type'     => 'checkbox',
-	'mode'     => 'switch',
+	'mode'     => 'checkbox',
 	'settings' => 'responsive_text',
 	'label'    => __( 'Responsive Text', 'ornea' ),
 	'default'  => 0,

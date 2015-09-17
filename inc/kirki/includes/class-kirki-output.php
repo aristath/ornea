@@ -23,10 +23,10 @@ if ( class_exists( 'Kirki_Output' ) ) {
 
 class Kirki_Output {
 
-	public static $settings = null;
-	public static $type     = 'theme_mod';
-	public static $output   = array();
-	public static $callback = null;
+	public static $settings    = null;
+	public static $output      = array();
+	public static $callback    = null;
+	public static $option_name = null;
 
 	public static $css;
 
@@ -40,59 +40,53 @@ class Kirki_Output {
 	 * @var 	array 		an array of arrays of the output arguments.
 	 * @var 	mixed		a callable function.
 	 */
-	public static function css( $setting = '', $type = 'theme_mod', $output = array(), $callback = '' ) {
-
-		// No need to proceed any further if we don't have the required arguments.
-		if ( '' == $setting || empty( $output ) ) {
-			return;
+	public static function css( $field ) {
+		/**
+		 * Make sure the field is sanitized before proceeding any further.
+		 */
+		$field = Kirki_Field::sanitize_field( $field );
+		/**
+		 * Get the config ID used in the Kirki class.
+		 */
+		$config_id = Kirki::get_config_id( $field );
+		/**
+		 * Set class vars
+		 */
+		self::$settings = $field['settings'];
+		self::$output   = $field['output'];
+		self::$callback = $field['sanitize_callback'];
+		/**
+		 * Get the value of this field
+		 */
+		if ( 'option' == Kirki::$config[ $config_id ]['option_type'] && '' != Kirki::$config[ $config_id ]['option_name'] ) {
+			self::$value = Kirki::get_option( $config_id, str_replace( array( ']', Kirki::$config[ $config_id ]['option_name'] . '[' ), '', $field['settings'] ) );
+		} else {
+			self::$value = Kirki::get_option( $config_id, $field['settings'] );
 		}
-
-		self::$settings = $setting;
-		self::$type     = $type;
-		self::$output   = Kirki_Field::sanitize_output( array( 'output' => $output ) );
-		self::$value    = self::get_value();
-		self::$callback = $callback;
-
-		return self::styles_parse();
-
-	}
-
-	/**
-	 * Gets the value
-	 */
-	public static function get_value() {
-
-		// Get the default value
-		$default = '';
-		if ( isset( Kirki::$fields[ self::$settings ] ) && isset( Kirki::$fields[ self::$settings ]['default'] ) ) {
-			if ( ! is_array( Kirki::$fields[ self::$settings ]['default'] ) ) {
-				$default = Kirki::$fields[ self::$settings ]['default'];
-			}
+		/**
+		 * Returns the styles
+		 */
+		if ( ! is_array( self::$value ) ) {
+			return self::styles();
 		}
-
-		if ( 'theme_mod' == self::$type ) { // This is a theme_mod
-			$value = get_theme_mod( self::$settings, $default );
-		} else { // This is an option
-			$value = get_option( self::$settings, $default );
-		}
-
-		return $value;
 
 	}
 
 	/**
 	 * Gets the array of generated styles and creates the minimized, inline CSS
 	 *
-	 * @return string|null	the generated CSS.
+	 * @param array
+	 * @return string	the generated CSS.
 	 */
-	public static function styles_parse() {
-
-		$css = self::add_prefixes( self::styles() );
+	public static function styles_parse( $css = array() ) {
 
 		/**
 		 * Process the array of CSS properties and produce the final CSS
 		 */
 		$final_css = '';
+		if ( ! is_array( $css ) || empty( $css ) ) {
+			return '';
+		}
 		foreach ( $css as $media_query => $styles ) {
 
 			$final_css .= ( 'global' != $media_query ) ? $media_query . '{' : '';
@@ -100,9 +94,10 @@ class Kirki_Output {
 			foreach ( $styles as $style => $style_array ) {
 				$final_css .= $style . '{';
 					foreach ( $style_array as $property => $value ) {
+						$value = ( is_string( $value ) ) ? $value : '';
 						// Take care of formatting the URL for background-image statements.
 						if ( 'background-image' == $property || 'background' == $property && false !== filter_var( $value, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED ) ) {
-							$value = 'url("'.$value.'")';
+							$value = 'url("' . $value . '")';
 						}
 						// Make sure the background-position property is properly formatted
 						if ( 'background-position' == $property ) {
@@ -117,7 +112,6 @@ class Kirki_Output {
 
 		}
 
-
 		return $final_css;
 
 	}
@@ -130,12 +124,47 @@ class Kirki_Output {
 		$styles = array();
 
 		foreach ( self::$output as $output ) {
-			// Do we have units?
-			$units  = ( isset( $output['units'] ) ) ? $output['units'] : '';
-			// Do we need to run this through a callback action?
+			/**
+			 * Do we have units?
+			 */
+			$units = ( isset( $output['units'] ) ) ? $output['units'] : '';
+			/**
+			 * Do we have a prefix?
+			 */
+			$prefix = ( isset( $output['prefix'] ) ) ? $output['prefix'] : '';
+			/**
+			 * Do we need to run this through a callback action?
+			 */
 			$value = ( '' != self::$callback ) ? call_user_func( self::$callback, self::$value ) : self::$value;
-
-			$styles[ $output['media_query'] ][ $output['element'] ][ $output['property'] ] = $value.$units;
+			if ( null !== $output['sanitize_callback'] ) {
+				$value = call_user_func( $output['sanitize_callback'], $value );
+			}
+			/**
+			 * Make sure the value is a string before proceeding
+			 * If all is ok, then populate the array.
+			 */
+			if ( ! is_array( $value ) ) {
+				$element = $output['element'];
+				/**
+				 * Allow using an array of elements
+				 */
+				if ( is_array( $output['element'] ) ) {
+					/**
+					 * Make sure our values are unique
+					 */
+					$elements = array_unique( $elements );
+					/**
+					 * Sort elements alphabetically.
+					 * This way all duplicate items will be merged in the final CSS array.
+					 */
+					sort( $elements );
+					/**
+					 * Implode items
+					 */
+					$element = implode( ',', $elements );
+				}
+				$styles[ $output['media_query'] ][ $element ][ $output['property'] ] = $prefix . $value . $units;
+			}
 		}
 
 		return $styles;
@@ -147,69 +176,77 @@ class Kirki_Output {
 	 */
 	public static function add_prefixes( $css ) {
 
-		if ( ! is_array( $css ) ) {
-			return;
-		}
-
-		foreach ( $css as $media_query => $elements ) {
-
-			foreach ( $elements as $element => $style_array ) {
-
-				foreach ( $style_array as $property => $value ) {
-
-					// border-radius
-					if ( 'border-radius' == $property ) {
-						$css[$media_query][$element]['-webkit-border-radius'] = $value;
-						$css[$media_query][$element]['-moz-border-radius'] = $value;
+		if ( is_array( $css ) ) {
+			foreach ( $css as $media_query => $elements ) {
+				foreach ( $elements as $element => $style_array ) {
+					foreach ( $style_array as $property => $value ) {
+						/**
+						 * border-radius
+						 */
+						if ( 'border-radius' == $property ) {
+							$css[ $media_query ][ $element ]['-webkit-border-radius'] = $value;
+							$css[ $media_query ][ $element ]['-moz-border-radius'] = $value;
+						}
+						/**
+						 * box-shadow
+						 */
+						if ( 'box-shadow' == $property ) {
+							$css[ $media_query ][ $element ]['-webkit-box-shadow'] = $value;
+							$css[ $media_query ][ $element ]['-moz-box-shadow']    = $value;
+						}
+						/**
+						 * box-sizing
+						 */
+						elseif ( 'box-sizing' == $property ) {
+							$css[ $media_query ][ $element ]['-webkit-box-sizing'] = $value;
+							$css[ $media_query ][ $element ]['-moz-box-sizing']    = $value;
+						}
+						/**
+						 * text-shadow
+						 */
+						elseif ( 'text-shadow' == $property ) {
+							$css[ $media_query ][ $element ]['-webkit-text-shadow'] = $value;
+							$css[ $media_query ][ $element ]['-moz-text-shadow']    = $value;
+						}
+						/**
+						 * transform
+						 */
+						elseif ( 'transform' == $property ) {
+							$css[ $media_query ][ $element ]['-webkit-transform'] = $value;
+							$css[ $media_query ][ $element ]['-moz-transform']    = $value;
+							$css[ $media_query ][ $element ]['-ms-transform']     = $value;
+							$css[ $media_query ][ $element ]['-o-transform']      = $value;
+						}
+						/**
+						 * background-size
+						 */
+						elseif ( 'background-size' == $property ) {
+							$css[ $media_query ][ $element ]['-webkit-background-size'] = $value;
+							$css[ $media_query ][ $element ]['-moz-background-size']    = $value;
+							$css[ $media_query ][ $element ]['-ms-background-size']     = $value;
+							$css[ $media_query ][ $element ]['-o-background-size']      = $value;
+						}
+						/**
+						 * transition
+						 */
+						elseif ( 'transition' == $property ) {
+							$css[ $media_query ][ $element ]['-webkit-transition'] = $value;
+							$css[ $media_query ][ $element ]['-moz-transition']    = $value;
+							$css[ $media_query ][ $element ]['-ms-transition']     = $value;
+							$css[ $media_query ][ $element ]['-o-transition']      = $value;
+						}
+						/**
+						 * transition-property
+						 */
+						elseif ( 'transition-property' == $property ) {
+							$css[ $media_query ][ $element ]['-webkit-transition-property'] = $value;
+							$css[ $media_query ][ $element ]['-moz-transition-property']    = $value;
+							$css[ $media_query ][ $element ]['-ms-transition-property']     = $value;
+							$css[ $media_query ][ $element ]['-o-transition-property']      = $value;
+						}
 					}
-					// box-shadow
-					if ( 'box-shadow' == $property ) {
-						$css[$media_query][$element]['-webkit-box-shadow'] = $value;
-						$css[$media_query][$element]['-moz-box-shadow']    = $value;
-					}
-					// box-sizing
-					elseif ( 'box-sizing' == $property ) {
-						$css[$media_query][$element]['-webkit-box-sizing'] = $value;
-						$css[$media_query][$element]['-moz-box-sizing']    = $value;
-					}
-					// text-shadow
-					elseif ( 'text-shadow' == $property ) {
-						$css[$media_query][$element]['-webkit-text-shadow'] = $value;
-						$css[$media_query][$element]['-moz-text-shadow']    = $value;
-					}
-					// transform
-					elseif ( 'transform' == $property ) {
-						$css[$media_query][$element]['-webkit-transform'] = $value;
-						$css[$media_query][$element]['-moz-transform']    = $value;
-						$css[$media_query][$element]['-ms-transform']     = $value;
-						$css[$media_query][$element]['-o-transform']      = $value;
-					}
-					// background-size
-					elseif ( 'background-size' == $property ) {
-						$css[$media_query][$element]['-webkit-background-size'] = $value;
-						$css[$media_query][$element]['-moz-background-size']    = $value;
-						$css[$media_query][$element]['-ms-background-size']     = $value;
-						$css[$media_query][$element]['-o-background-size']      = $value;
-					}
-					// transition
-					elseif ( 'transition' == $property ) {
-						$css[$media_query][$element]['-webkit-transition'] = $value;
-						$css[$media_query][$element]['-moz-transition']    = $value;
-						$css[$media_query][$element]['-ms-transition']     = $value;
-						$css[$media_query][$element]['-o-transition']      = $value;
-					}
-					// transition-property
-					elseif ( 'transition-property' == $property ) {
-						$css[$media_query][$element]['-webkit-transition-property'] = $value;
-						$css[$media_query][$element]['-moz-transition-property']    = $value;
-						$css[$media_query][$element]['-ms-transition-property']     = $value;
-						$css[$media_query][$element]['-o-transition-property']      = $value;
-					}
-
 				}
-
 			}
-
 		}
 
 		return $css;
