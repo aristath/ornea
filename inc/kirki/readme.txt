@@ -114,6 +114,10 @@ To get an idea on how to include Kirki in your next project, you can take a look
 
 == Changelog ==
 
+= 1.0.3
+
+* Updated Kirki
+
 = 1.0.2 =
 
 July 17, 2014, dev time: 5 minutes
