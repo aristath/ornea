@@ -48,12 +48,13 @@ class Ornea {
 		 * If Kirki is not already installed, use the included version
 		 */
 		if ( ! class_exists( 'Kirki' ) ) {
-			require get_template_directory() . '/inc/kirki/kirki.php';
+			require get_template_directory() . '/inc/class-ornea-kirki-installer-section.php';
 		}
 
 		/**
 		 * Customizer additions.
 		 */
+		require get_template_directory() . '/inc/class-ornea-kirki.php';
 		require get_template_directory() . '/inc/customizer.php';
 
 		/**
