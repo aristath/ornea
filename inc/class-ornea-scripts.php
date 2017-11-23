@@ -64,27 +64,27 @@ class Ornea_Scripts {
 		$css = '';
 
 		$color = get_theme_mod( 'accent_color', '#a46497' );
-		$color = ( false !== strpos( $color, 'rgba' ) ) ? Kirki_Color::rgba2hex( $color ) : $color;
+		// $color = ( false !== strpos( $color, 'rgba' ) ) ? Kirki_Color::rgba2hex( $color ) : $color;
 
-		if ( 127 < Kirki_Color::get_brightness( $color ) ) {
-			$text_color  = '#515151';
-			$hover_color = Kirki_Color::adjust_brightness( $color, 10 );
-		} else {
-			$text_color  = '#ffffff';
-			$hover_color = Kirki_Color::adjust_brightness( $color, -10 );
-		}
+		// if ( 127 < Kirki_Color::get_brightness( $color ) ) {
+		// 	$text_color  = '#515151';
+		// 	$hover_color = Kirki_Color::adjust_brightness( $color, 10 );
+		// } else {
+		// 	$text_color  = '#ffffff';
+		// 	$hover_color = Kirki_Color::adjust_brightness( $color, -10 );
+		// }
 
 		/**
 		 * Header Styles
 		 */
-		$color = get_theme_mod( 'header_background_color', '#111111' );
-		$color = ( false !== strpos( $color, 'rgb' ) ) ? Kirki_Color::rgba2hex( $color ) : $color;
-		$header_textcolor    = ( 127 < Kirki_Color::get_brightness( $color ) ) ? '#222222' : '#ffffff';
-		$header_border_color = ( 127 < Kirki_Color::get_brightness( $color ) ) ? 'rgba(0,0,0,.1)' : 'rgba(255,255,255,.08)';
-		$css .= '.horizontal-menu a, .horizontal-menu a:visited, #header-wrapper .dashicons, #header-wrapper .breadcrumbs .woocommerce-breadcrumb, #header-wrapper .breadcrumbs a, #header-wrapper .breadcrumbs .woocommerce-breadbrumb a, h1.site-title a, #header-wrapper .search-wrapper input { color:' . $header_textcolor . ';}';
-		$css .= ( '#ffffff' == $header_textcolor ) ? 'body .horizontal-menu a:hover{color: rgba(255,255,255,.75);}' : 'body .horizontal-menu a:hover{color: rgba(0,0,0,.75);}';
-		$css .= '#header-wrapper .sidebar-button svg { fill:' . $header_textcolor . ';}';
-		$css .= '.horizontal-menu{border-top-color:' . $header_border_color . ';}';
+		// $color = get_theme_mod( 'header_background_color', '#111111' );
+		// $color = ( false !== strpos( $color, 'rgb' ) ) ? Kirki_Color::rgba2hex( $color ) : $color;
+		// $header_textcolor    = ( 127 < Kirki_Color::get_brightness( $color ) ) ? '#222222' : '#ffffff';
+		// $header_border_color = ( 127 < Kirki_Color::get_brightness( $color ) ) ? 'rgba(0,0,0,.1)' : 'rgba(255,255,255,.08)';
+		// $css .= '.horizontal-menu a, .horizontal-menu a:visited, #header-wrapper .dashicons, #header-wrapper .breadcrumbs .woocommerce-breadcrumb, #header-wrapper .breadcrumbs a, #header-wrapper .breadcrumbs .woocommerce-breadbrumb a, h1.site-title a, #header-wrapper .search-wrapper input { color:' . $header_textcolor . ';}';
+		// $css .= ( '#ffffff' == $header_textcolor ) ? 'body .horizontal-menu a:hover{color: rgba(255,255,255,.75);}' : 'body .horizontal-menu a:hover{color: rgba(0,0,0,.75);}';
+		// $css .= '#header-wrapper .sidebar-button svg { fill:' . $header_textcolor . ';}';
+		// $css .= '.horizontal-menu{border-top-color:' . $header_border_color . ';}';
 
 		/**
 		 * Sidebar alignment
@@ -120,29 +120,29 @@ class Ornea_Scripts {
 		 * Default is white color, so we'll only override this if needed.
 		 */
 		$color = get_theme_mod( 'offcanvas_menu_background_color', '#a46497' );
-		$color = ( false !== strpos( $color, 'rgba' ) ) ? Kirki_Color::rgba2hex( $color ) : $color;
-		if ( 127 < Kirki_Color::get_brightness( $color ) ) {
-			$css .= '.left-offcanvas-menu ul li a, .left-offcanvas-menu .close{color:#222222;}';
-		}
+		// $color = ( false !== strpos( $color, 'rgba' ) ) ? Kirki_Color::rgba2hex( $color ) : $color;
+		// if ( 127 < Kirki_Color::get_brightness( $color ) ) {
+		// 	$css .= '.left-offcanvas-menu ul li a, .left-offcanvas-menu .close{color:#222222;}';
+		// }
 
 		/**
 		 * OffCanvas sidebar
 		 */
 		$color = get_theme_mod( 'offcanvas_sidebar_background_color', '#a46497' );
-		$color = ( false !== strpos( $color, 'rgba' ) ) ? Kirki_Color::rgba2hex( $color ) : $color;
-		if ( 127 < Kirki_Color::get_brightness( $color ) ) {
-			$offcanvas_sidebar_color = '#222222';
-		} else {
-			$offcanvas_sidebar_color = '#ffffff';
-		}
-		$css .= 'body .offcanvas-sidebar, body .offcanvas-sidebar a, body .offcanvas-sidebar a:visited, body .offcanvas-sidebar a:hover.offcanvas-sidebar .close{color:' . $offcanvas_sidebar_color . ';}';
+		// $color = ( false !== strpos( $color, 'rgba' ) ) ? Kirki_Color::rgba2hex( $color ) : $color;
+		// if ( 127 < Kirki_Color::get_brightness( $color ) ) {
+		// 	$offcanvas_sidebar_color = '#222222';
+		// } else {
+		// 	$offcanvas_sidebar_color = '#ffffff';
+		// }
+		// $css .= 'body .offcanvas-sidebar, body .offcanvas-sidebar a, body .offcanvas-sidebar a:visited, body .offcanvas-sidebar a:hover.offcanvas-sidebar .close{color:' . $offcanvas_sidebar_color . ';}';
 
 		/**
 		 * Button mods
 		 */
-		$css .= 'button, input[type="button"], input[type="reset"], input[type="submit"], .woocommerce #respond input#submit, .woocommerce a.button, .woocommerce button.button, .woocommerce input.button{font-weight:' . get_theme_mod( 'font_base_weight', 700 ) . ';}';
-		$css .= 'button, input[type="button"], input[type="reset"], input[type="submit"] {background-color:' . get_theme_mod( 'accent_color', '#a46497' ) . '; color:' . $text_color . '}';
-		$css .= 'button:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover, button:active, input[type="button"]:active, input[type="reset"]:active, input[type="submit"]:active { background-color:' . $hover_color . ';}';
+		// $css .= 'button, input[type="button"], input[type="reset"], input[type="submit"], .woocommerce #respond input#submit, .woocommerce a.button, .woocommerce button.button, .woocommerce input.button{font-weight:' . get_theme_mod( 'font_base_weight', 700 ) . ';}';
+		// $css .= 'button, input[type="button"], input[type="reset"], input[type="submit"] {background-color:' . get_theme_mod( 'accent_color', '#a46497' ) . '; color:' . $text_color . '}';
+		// $css .= 'button:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover, button:active, input[type="button"]:active, input[type="reset"]:active, input[type="submit"]:active { background-color:' . $hover_color . ';}';
 
 		// Attach our custom styles to the main stylesheet using wp_add_inline_style
 		// See http://codex.wordpress.org/Function_Reference/wp_add_inline_style for documentation
